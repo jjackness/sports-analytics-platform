@@ -1,0 +1,25 @@
+player_id,name,team,position,fantasy_points_avg,consistency,games_played
+team_2_WR_1,Player team_2_WR_1,Team 2,WR,40.54,0.735231006854143,15
+team_2_RB_1,Player team_2_RB_1,Team 2,RB,19.773333333333333,0.8049032144394523,15
+team_2_QB_1,Player team_2_QB_1,Team 2,QB,14.856,0.5273696397280696,15
+team_3_WR_1,Player team_3_WR_1,Team 3,WR,10.950000000000001,0.2374429223744292,2
+team_3_RB_1,Player team_3_RB_1,Team 3,RB,7.500000000000001,0.12,2
+team_4_WR_1,Player team_4_WR_1,Team 4,WR,7.4,-0.5386130663704387,4
+team_4_RB_1,Player team_4_RB_1,Team 4,RB,5.7250000000000005,-0.7021103629462386,4
+team_3_QB_1,Player team_3_QB_1,Team 3,QB,4.38,0.2374429223744292,2
+team_1_WR_1,Player team_1_WR_1,Team 1,WR,3.933333333333333,-1.8025309692100127,15
+team_4_QB_1,Player team_4_QB_1,Team 4,QB,2.36,-0.4900319950138303,4
+team_1_QB_1,Player team_1_QB_1,Team 1,QB,1.8933333333333335,-1.9591009641726362,15
+team_1_RB_1,Player team_1_RB_1,Team 1,RB,1.4666666666666666,-1.0848727095139483,15
+team_1_WR_2,Player team_1_WR_2,Team 1,WR,0.0,1.0,15
+team_1_WR_3,Player team_1_WR_3,Team 1,WR,0.0,1.0,15
+team_1_TE_1,Player team_1_TE_1,Team 1,TE,0.0,1.0,15
+team_2_WR_2,Player team_2_WR_2,Team 2,WR,0.0,1.0,15
+team_2_WR_3,Player team_2_WR_3,Team 2,WR,0.0,1.0,15
+team_2_TE_1,Player team_2_TE_1,Team 2,TE,0.0,1.0,15
+team_3_WR_2,Player team_3_WR_2,Team 3,WR,0.0,1.0,2
+team_3_WR_3,Player team_3_WR_3,Team 3,WR,0.0,1.0,2
+team_3_TE_1,Player team_3_TE_1,Team 3,TE,0.0,1.0,2
+team_4_WR_2,Player team_4_WR_2,Team 4,WR,0.0,1.0,4
+team_4_WR_3,Player team_4_WR_3,Team 4,WR,0.0,1.0,4
+team_4_TE_1,Player team_4_TE_1,Team 4,TE,0.0,1.0,4

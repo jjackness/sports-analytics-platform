@@ -1,0 +1,40 @@
+{
+    "run_play": {
+        "mean": 6.64,
+        "median": 3.0,
+        "std": 7.430659047322184,
+        "min": -2,
+        "max": 25,
+        "percentile_25": 3.0,
+        "percentile_75": 10.75,
+        "success_rate": 46.0,
+        "touchdown_rate": 4.0,
+        "turnover_rate": 2.0,
+        "sample_size": 50
+    },
+    "pass_play": {
+        "mean": 6.36,
+        "median": 3.0,
+        "std": 7.488113028974247,
+        "min": -2,
+        "max": 25,
+        "percentile_25": 0.75,
+        "percentile_75": 7.0,
+        "success_rate": 44.0,
+        "touchdown_rate": 6.0,
+        "turnover_rate": 2.0,
+        "sample_size": 50
+    },
+    "source_data": {
+        "sample_size": 100,
+        "teams_included": [
+            "NE",
+            "KC",
+            "SF",
+            "BAL",
+            "DAL"
+        ],
+        "plays_analyzed": 100
+    },
+    "exported_at": "2025-03-01 02:03:17"
+}

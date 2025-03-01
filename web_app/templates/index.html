@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Football Simulation - Home{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">Football Simulation Engine</h1>
+    <p class="lead">Welcome to the Football Simulation Engine. This tool allows you to simulate football games and seasons, analyze play-by-play data, and generate fantasy projections.</p>
+    <hr class="my-4">
+    <p>Choose an option below to get started:</p>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Game Simulation</h5>
+                <p class="card-text">Simulate individual football games between teams with detailed play-by-play outcomes.</p>
+                <a href="{{ url_for('simulation_setup') }}" class="btn btn-primary">Simulate Game</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Season Simulation</h5>
+                <p class="card-text">Simulate an entire season with multiple teams and generate standings.</p>
+                <a href="{{ url_for('season_setup') }}" class="btn btn-primary">Simulate Season</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Data Analysis</h5>
+                <p class="card-text">Analyze football data to extract patterns and statistics.</p>
+                <a href="{{ url_for('analysis_data') }}" class="btn btn-primary">Analyze Data</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-5">
+    <h3>Available Teams</h3>
+    <div class="row">
+        {% for team_id in teams %}
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Team {{ team_id }}</h5>
+                    <p class="card-text">
+                        <strong>ID:</strong> {{ team_id }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

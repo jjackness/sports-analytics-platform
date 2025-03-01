@@ -1,0 +1,22 @@
+{
+    "home_team": "Team 2",
+    "away_team": "Team 3",
+    "home_score": 0,
+    "away_score": 49,
+    "winner": "Team 3",
+    "plays": 159,
+    "home_stats": {
+        "total_yards": 75,
+        "passing_yards": 37,
+        "rushing_yards": 38,
+        "turnovers": 0
+    },
+    "away_stats": {
+        "total_yards": 494,
+        "passing_yards": 330,
+        "rushing_yards": 164,
+        "turnovers": 0
+    },
+    "simulation_type": "single",
+    "num_simulations": 1
+}

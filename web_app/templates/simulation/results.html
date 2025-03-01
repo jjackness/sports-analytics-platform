@@ -1,0 +1,577 @@
+{% extends "base.html" %}
+
+{% block title %}Simulation Results{% endblock %}
+
+{% block content %}
+<h2>Simulation Results</h2>
+
+{% if results %}
+    <!-- Multiple simulations summary -->
+    {% if results.simulation_type == 'multiple' %}
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Multiple Simulations Summary</h4>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-5">
+                        <h5>{{ results.home_team_name }}</h5>
+                        <div class="display-4">{{ (results.home_win_pct * 100)|round|int }}%</div>
+                        <p class="text-muted">Win Percentage</p>
+                    </div>
+                    <div class="col-2">
+                        <h5>VS</h5>
+                        <div class="mt-3">
+                            <span class="badge bg-info">{{ results.num_simulations }} Games</span>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <h5>{{ results.away_team_name }}</h5>
+                        <div class="display-4">{{ (results.away_win_pct * 100)|round|int }}%</div>
+                        <p class="text-muted">Win Percentage</p>
+                    </div>
+                </div>
+                {% if results.tie_pct > 0 %}
+                <div class="text-center mt-3">
+                    <p>Tie Percentage: {{ (results.tie_pct * 100)|round|int }}%</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    
+    <!-- Single game summary -->
+    {% elif results.simulation_type == 'single' %}
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Game Summary</h4>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-5">
+                        <h5>{{ results.home_team }}</h5>
+                        <h1>{{ results.home_score }}</h1>
+                    </div>
+                    <div class="col-2">
+                        <h5>VS</h5>
+                    </div>
+                    <div class="col-5">
+                        <h5>{{ results.away_team }}</h5>
+                        <h1>{{ results.away_score }}</h1>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <h5>Winner: {{ results.winner }}</h5>
+                    <p class="text-muted">Total plays: {{ results.plays }}</p>
+                </div>
+            </div>
+        </div>
+
+        {% if 'home_stats' in results %}
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>{{ results.home_team }} Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Total Yards</th>
+                                    <td>{{ results.home_stats.total_yards }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Passing Yards</th>
+                                    <td>{{ results.home_stats.passing_yards }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Rushing Yards</th>
+                                    <td>{{ results.home_stats.rushing_yards }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Turnovers</th>
+                                    <td>{{ results.home_stats.turnovers }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>{{ results.away_team }} Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Total Yards</th>
+                                    <td>{{ results.away_stats.total_yards }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Passing Yards</th>
+                                    <td>{{ results.away_stats.passing_yards }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Rushing Yards</th>
+                                    <td>{{ results.away_stats.rushing_yards }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Turnovers</th>
+                                    <td>{{ results.away_stats.turnovers }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Player Statistics Section -->
+        {% if results.simulation_type == 'single' %}
+        <div class="card mt-4">
+            <div class="card-header bg-info text-white">
+                <h4 class="mb-0">Player Performance</h4>
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-tabs" id="playerStatsTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="offense-tab" data-bs-toggle="tab" data-bs-target="#offense" type="button" role="tab" aria-controls="offense" aria-selected="true">Offensive Players</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="defense-tab" data-bs-toggle="tab" data-bs-target="#defense" type="button" role="tab" aria-controls="defense" aria-selected="false">Defensive Players</button>
+                    </li>
+                </ul>
+                <div class="tab-content mt-3" id="playerStatsContent">
+                    <!-- Offensive Players Tab -->
+                    <div class="tab-pane fade show active" id="offense" role="tabpanel" aria-labelledby="offense-tab">
+                        <div class="row">
+                            <!-- Home Team Offense -->
+                            <div class="col-md-6">
+                                <h5>{{ results.home_team }} Offense</h5>
+                                {% if results.home_player_stats|default([])|length > 0 %}
+                                    <div class="accordion" id="homeOffenseAccordion">
+                                        <!-- QBs Section -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="homeQBheading">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#homeQBcollapse" aria-expanded="true" aria-controls="homeQBcollapse">
+                                                    Quarterbacks
+                                                </button>
+                                            </h2>
+                                            <div id="homeQBcollapse" class="accordion-collapse collapse show" aria-labelledby="homeQBheading">
+                                                <div class="accordion-body">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Player</th>
+                                                                <th>Comp/Att</th>
+                                                                <th>Yds</th>
+                                                                <th>TD</th>
+                                                                <th>INT</th>
+                                                                <th>Rush</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for player in results.home_player_stats|default([]) %}
+                                                                {% if player.position == "QB" and player.has_stats|default(false) %}
+                                                                    <tr>
+                                                                        <td>{{ player.name }}</td>
+                                                                        <td>{{ player.stats.passing_completions|default(0) }}/{{ player.stats.passing_attempts|default(0) }}</td>
+                                                                        <td>{{ player.stats.passing_yards|default(0) }}</td>
+                                                                        <td>{{ player.stats.passing_tds|default(0) }}</td>
+                                                                        <td>{{ player.stats.passing_ints|default(0) }}</td>
+                                                                        <td>{{ player.stats.rushing_attempts|default(0) }}att/{{ player.stats.rushing_yards|default(0) }}yds/{{ player.stats.rushing_tds|default(0) }}td</td>
+                                                                    </tr>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- RBs Section -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="homeRBheading">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#homeRBcollapse" aria-expanded="false" aria-controls="homeRBcollapse">
+                                                    Running Backs
+                                                </button>
+                                            </h2>
+                                            <div id="homeRBcollapse" class="accordion-collapse collapse" aria-labelledby="homeRBheading">
+                                                <div class="accordion-body">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Player</th>
+                                                                <th>Rush</th>
+                                                                <th>Yds</th>
+                                                                <th>TD</th>
+                                                                <th>Rec</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for player in results.home_player_stats|default([]) %}
+                                                                {% if player.position == "RB" and player.has_stats|default(false) %}
+                                                                    <tr>
+                                                                        <td>{{ player.name }}</td>
+                                                                        <td>{{ player.stats.rushing_attempts|default(0) }}</td>
+                                                                        <td>{{ player.stats.rushing_yards|default(0) }}</td>
+                                                                        <td>{{ player.stats.rushing_tds|default(0) }}</td>
+                                                                        <td>{{ player.stats.receiving_catches|default(0) }}/{{ player.stats.receiving_yards|default(0) }}yds/{{ player.stats.receiving_tds|default(0) }}td</td>
+                                                                    </tr>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- WRs and TEs Section -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="homeWRTEheading">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#homeWRTEcollapse" aria-expanded="false" aria-controls="homeWRTEcollapse">
+                                                    Receivers
+                                                </button>
+                                            </h2>
+                                            <div id="homeWRTEcollapse" class="accordion-collapse collapse" aria-labelledby="homeWRTEheading">
+                                                <div class="accordion-body">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Player</th>
+                                                                <th>Pos</th>
+                                                                <th>Targets</th>
+                                                                <th>Rec</th>
+                                                                <th>Yds</th>
+                                                                <th>TD</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for player in results.home_player_stats|default([]) %}
+                                                                {% if player.position in ["WR", "TE"] and player.has_stats|default(false) %}
+                                                                    <tr>
+                                                                        <td>{{ player.name }}</td>
+                                                                        <td>{{ player.position }}</td>
+                                                                        <td>{{ player.stats.receiving_targets|default(0) }}</td>
+                                                                        <td>{{ player.stats.receiving_catches|default(0) }}</td>
+                                                                        <td>{{ player.stats.receiving_yards|default(0) }}</td>
+                                                                        <td>{{ player.stats.receiving_tds|default(0) }}</td>
+                                                                    </tr>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="alert alert-info">
+                                        <strong>Note:</strong> To get detailed player statistics, we need to modify the simulation engine to include them in the results. Currently, only the summary statistics are available.
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Away Team Offense -->
+                            <div class="col-md-6">
+                                <h5>{{ results.away_team }} Offense</h5>
+                                {% if results.away_player_stats|default([])|length > 0 %}
+                                    <div class="accordion" id="awayOffenseAccordion">
+                                        <!-- QBs Section -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="awayQBheading">
+                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#awayQBcollapse" aria-expanded="true" aria-controls="awayQBcollapse">
+                                                    Quarterbacks
+                                                </button>
+                                            </h2>
+                                            <div id="awayQBcollapse" class="accordion-collapse collapse show" aria-labelledby="awayQBheading">
+                                                <div class="accordion-body">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Player</th>
+                                                                <th>Comp/Att</th>
+                                                                <th>Yds</th>
+                                                                <th>TD</th>
+                                                                <th>INT</th>
+                                                                <th>Rush</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for player in results.away_player_stats|default([]) %}
+                                                                {% if player.position == "QB" and player.has_stats|default(false) %}
+                                                                    <tr>
+                                                                        <td>{{ player.name }}</td>
+                                                                        <td>{{ player.stats.passing_completions|default(0) }}/{{ player.stats.passing_attempts|default(0) }}</td>
+                                                                        <td>{{ player.stats.passing_yards|default(0) }}</td>
+                                                                        <td>{{ player.stats.passing_tds|default(0) }}</td>
+                                                                        <td>{{ player.stats.passing_ints|default(0) }}</td>
+                                                                        <td>{{ player.stats.rushing_attempts|default(0) }}att/{{ player.stats.rushing_yards|default(0) }}yds/{{ player.stats.rushing_tds|default(0) }}td</td>
+                                                                    </tr>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- RBs Section -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="awayRBheading">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#awayRBcollapse" aria-expanded="false" aria-controls="awayRBcollapse">
+                                                    Running Backs
+                                                </button>
+                                            </h2>
+                                            <div id="awayRBcollapse" class="accordion-collapse collapse" aria-labelledby="awayRBheading">
+                                                <div class="accordion-body">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Player</th>
+                                                                <th>Rush</th>
+                                                                <th>Yds</th>
+                                                                <th>TD</th>
+                                                                <th>Rec</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for player in results.away_player_stats|default([]) %}
+                                                                {% if player.position == "RB" and player.has_stats|default(false) %}
+                                                                    <tr>
+                                                                        <td>{{ player.name }}</td>
+                                                                        <td>{{ player.stats.rushing_attempts|default(0) }}</td>
+                                                                        <td>{{ player.stats.rushing_yards|default(0) }}</td>
+                                                                        <td>{{ player.stats.rushing_tds|default(0) }}</td>
+                                                                        <td>{{ player.stats.receiving_catches|default(0) }}/{{ player.stats.receiving_yards|default(0) }}yds/{{ player.stats.receiving_tds|default(0) }}td</td>
+                                                                    </tr>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- WRs and TEs Section -->
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="awayWRTEheading">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#awayWRTEcollapse" aria-expanded="false" aria-controls="awayWRTEcollapse">
+                                                    Receivers
+                                                </button>
+                                            </h2>
+                                            <div id="awayWRTEcollapse" class="accordion-collapse collapse" aria-labelledby="awayWRTEheading">
+                                                <div class="accordion-body">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Player</th>
+                                                                <th>Pos</th>
+                                                                <th>Targets</th>
+                                                                <th>Rec</th>
+                                                                <th>Yds</th>
+                                                                <th>TD</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for player in results.away_player_stats|default([]) %}
+                                                                {% if player.position in ["WR", "TE"] and player.has_stats|default(false) %}
+                                                                    <tr>
+                                                                        <td>{{ player.name }}</td>
+                                                                        <td>{{ player.position }}</td>
+                                                                        <td>{{ player.stats.receiving_targets|default(0) }}</td>
+                                                                        <td>{{ player.stats.receiving_catches|default(0) }}</td>
+                                                                        <td>{{ player.stats.receiving_yards|default(0) }}</td>
+                                                                        <td>{{ player.stats.receiving_tds|default(0) }}</td>
+                                                                    </tr>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="alert alert-info">
+                                        <strong>Note:</strong> To get detailed player statistics, we need to modify the simulation engine to include them in the results. Currently, only the summary statistics are available.
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Defensive Players Tab -->
+                    <div class="tab-pane fade" id="defense" role="tabpanel" aria-labelledby="defense-tab">
+                        <div class="row">
+                            <!-- Home Team Defense -->
+                            <div class="col-md-6">
+                                <h5>{{ results.home_team }} Defense</h5>
+                                {% if results.home_player_stats|default([])|length > 0 %}
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Player</th>
+                                                <th>Pos</th>
+                                                <th>Tackles</th>
+                                                <th>Sacks</th>
+                                                <th>INT</th>
+                                                <th>FF</th>
+                                                <th>FR</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for player in results.home_player_stats|default([]) %}
+                                                {% if player.position in ["LB", "DL", "CB", "S"] and player.has_stats|default(false) %}
+                                                    <tr>
+                                                        <td>{{ player.name }}</td>
+                                                        <td>{{ player.position }}</td>
+                                                        <td>{{ player.stats.tackles|default(0) }}</td>
+                                                        <td>{{ player.stats.sacks|default(0) }}</td>
+                                                        <td>{{ player.stats.interceptions|default(0) }}</td>
+                                                        <td>{{ player.stats.forced_fumbles|default(0) }}</td>
+                                                        <td>{{ player.stats.fumble_recoveries|default(0) }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <div class="alert alert-info">
+                                        <strong>Note:</strong> To get detailed player statistics, we need to modify the simulation engine to include them in the results. Currently, only the summary statistics are available.
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Away Team Defense -->
+                            <div class="col-md-6">
+                                <h5>{{ results.away_team }} Defense</h5>
+                                {% if results.away_player_stats|default([])|length > 0 %}
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Player</th>
+                                                <th>Pos</th>
+                                                <th>Tackles</th>
+                                                <th>Sacks</th>
+                                                <th>INT</th>
+                                                <th>FF</th>
+                                                <th>FR</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for player in results.away_player_stats|default([]) %}
+                                                {% if player.position in ["LB", "DL", "CB", "S"] and player.has_stats|default(false) %}
+                                                    <tr>
+                                                        <td>{{ player.name }}</td>
+                                                        <td>{{ player.position }}</td>
+                                                        <td>{{ player.stats.tackles|default(0) }}</td>
+                                                        <td>{{ player.stats.sacks|default(0) }}</td>
+                                                        <td>{{ player.stats.interceptions|default(0) }}</td>
+                                                        <td>{{ player.stats.forced_fumbles|default(0) }}</td>
+                                                        <td>{{ player.stats.fumble_recoveries|default(0) }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <div class="alert alert-info">
+                                        <strong>Note:</strong> To get detailed player statistics, we need to modify the simulation engine to include them in the results. Currently, only the summary statistics are available.
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    {% else %}
+        <div class="alert alert-info">
+            Unknown simulation type.
+        </div>
+    {% endif %}
+
+    <!-- Player Fantasy Projections (for both single and multiple simulations) -->
+    {% if 'player_projections' in results %}
+    <div class="card mt-4">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0">Player Fantasy Projections</h4>
+        </div>
+        <div class="card-body">
+            <p class="mb-3">
+                {% if results.simulation_type == 'multiple' %}
+                    Based on {{ results.num_simulations }} simulated games
+                    <span class="ms-2">
+                        <button class="btn btn-sm btn-outline-info" type="button" data-bs-toggle="collapse" data-bs-target="#explanationCollapse" aria-expanded="false" aria-controls="explanationCollapse">
+                            How are these calculated?
+                        </button>
+                    </span>
+                {% else %}
+                    Based on 1 simulated game
+                {% endif %}
+            </p>
+            
+            <div class="collapse mb-4" id="explanationCollapse">
+                <div class="card card-body bg-light">
+                    <h5>How Fantasy Projections Work</h5>
+                    <p>The fantasy projections shown are calculated as follows:</p>
+                    <ul>
+                        <li><strong>For Multiple Game Simulations:</strong> 
+                            <ul>
+                                <li>The system runs multiple separate simulations of the same matchup</li>
+                                <li>For each player in each game, it calculates fantasy points based on their statistics</li>
+                                <li>It then averages these fantasy points across all simulations</li>
+                                <li>This gives an "expected fantasy output" for each player in this specific matchup</li>
+                            </ul>
+                        </li>
+                        <li><strong>For Single Game Simulations:</strong>
+                            <ul>
+                                <li>The fantasy points are calculated directly from the player's performance in that one game</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p>This approach helps with fantasy football decisions by showing which players are likely to perform well against specific opponents based on simulations of the same matchup.</p>
+                </div>
+            </div>
+            
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player</th>
+                        <th>Position</th>
+                        <th>Team</th>
+                        <th>Fantasy Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in results.player_projections %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ player.name }}</td>
+                        <td>{{ player.position }}</td>
+                        <td>{{ player.team }}</td>
+                        <td><strong>{{ player.fantasy_points_avg|round(1) }}</strong></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+{% else %}
+    <div class="alert alert-warning">
+        No simulation results found. <a href="{{ url_for('simulation_setup') }}">Run a new simulation</a>
+    </div>
+{% endif %}
+
+<div class="mt-4">
+    <a href="{{ url_for('simulation_setup') }}" class="btn btn-primary">Run Another Simulation</a>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Return to Home</a>
+</div>
+{% endblock %}

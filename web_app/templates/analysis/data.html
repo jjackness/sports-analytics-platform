@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Data Analysis{% endblock %}
+
+{% block content %}
+<h2>Data Analysis</h2>
+<p>Select a data file to analyze.</p>
+
+<div class="card">
+    <div class="card-body">
+        {% if data_files %}
+            <form method="post" action="{{ url_for('run_analysis') }}">
+                <div class="mb-3">
+                    <label for="data_file" class="form-label">Select Data File</label>
+                    <select class="form-select" id="data_file" name="data_file" required>
+                        <option value="" selected disabled>Choose a file</option>
+                        {% for file in data_files %}
+                            <option value="{{ file }}">{{ file }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Analyze Data</button>
+            </form>
+        {% else %}
+            <div class="alert alert-warning">
+                No data files found in the data directory.
+                <br>
+                <a href="{{ url_for('index') }}" class="alert-link">Return to homepage</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

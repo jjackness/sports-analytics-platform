@@ -1,0 +1,366 @@
+{
+    "games": [
+        {
+            "home_team": "Team 2",
+            "away_team": "Team 1",
+            "home_score": 0,
+            "away_score": 14,
+            "winner": "Team 1",
+            "plays": 180,
+            "home_stats": {
+                "total_yards": 20,
+                "passing_yards": 18,
+                "rushing_yards": 2,
+                "turnovers": 0
+            },
+            "away_stats": {
+                "total_yards": 503,
+                "passing_yards": 238,
+                "rushing_yards": 265,
+                "turnovers": 0
+            }
+        },
+        {
+            "home_team": "Team 2",
+            "away_team": "Team 4",
+            "home_score": 0,
+            "away_score": 21,
+            "winner": "Team 4",
+            "plays": 186,
+            "home_stats": {
+                "total_yards": 40,
+                "passing_yards": 33,
+                "rushing_yards": 7,
+                "turnovers": 0
+            },
+            "away_stats": {
+                "total_yards": 430,
+                "passing_yards": 219,
+                "rushing_yards": 211,
+                "turnovers": 0
+            }
+        },
+        {
+            "home_team": "Team 3",
+            "away_team": "Team 4",
+            "home_score": 0,
+            "away_score": 7,
+            "winner": "Team 4",
+            "plays": 166,
+            "home_stats": {
+                "total_yards": 29,
+                "passing_yards": 12,
+                "rushing_yards": 17,
+                "turnovers": 0
+            },
+            "away_stats": {
+                "total_yards": 440,
+                "passing_yards": 255,
+                "rushing_yards": 185,
+                "turnovers": 0
+            }
+        },
+        {
+            "home_team": "Team 2",
+            "away_team": "Team 1",
+            "home_score": 0,
+            "away_score": 14,
+            "winner": "Team 1",
+            "plays": 179,
+            "home_stats": {
+                "total_yards": 8,
+                "passing_yards": 7,
+                "rushing_yards": 1,
+                "turnovers": 0
+            },
+            "away_stats": {
+                "total_yards": 446,
+                "passing_yards": 229,
+                "rushing_yards": 217,
+                "turnovers": 0
+            }
+        },
+        {
+            "home_team": "Team 3",
+            "away_team": "Team 4",
+            "home_score": 0,
+            "away_score": 21,
+            "winner": "Team 4",
+            "plays": 179,
+            "home_stats": {
+                "total_yards": 0,
+                "passing_yards": 0,
+                "rushing_yards": 0,
+                "turnovers": 0
+            },
+            "away_stats": {
+                "total_yards": 554,
+                "passing_yards": 360,
+                "rushing_yards": 194,
+                "turnovers": 0
+            }
+        },
+        {
+            "home_team": "Team 2",
+            "away_team": "Team 3",
+            "home_score": 0,
+            "away_score": 14,
+            "winner": "Team 3",
+            "plays": 188,
+            "home_stats": {
+                "total_yards": 41,
+                "passing_yards": 31,
+                "rushing_yards": 10,
+                "turnovers": 0
+            },
+            "away_stats": {
+                "total_yards": 455,
+                "passing_yards": 222,
+                "rushing_yards": 233,
+                "turnovers": 0
+            }
+        },
+        {
+            "home_team": "Team 4",
+            "away_team": "Team 3",
+            "home_score": 0,
+            "away_score": 14,
+            "winner": "Team 3",
+            "plays": 162,
+            "home_stats": {
+                "total_yards": 9,
+                "passing_yards": 7,
+                "rushing_yards": 2,
+                "turnovers": 0
+            },
+            "away_stats": {
+                "total_yards": 503,
+                "passing_yards": 314,
+                "rushing_yards": 189,
+                "turnovers": 0
+            }
+        },
+        {
+            "home_team": "Team 1",
+            "away_team": "Team 3",
+            "home_score": 0,
+            "away_score": 7,
+            "winner": "Team 3",
+            "plays": 166,
+            "home_stats": {
+                "total_yards": 1,
+                "passing_yards": 0,
+                "rushing_yards": 1,
+                "turnovers": 0
+            },
+            "away_stats": {
+                "total_yards": 470,
+                "passing_yards": 275,
+                "rushing_yards": 195,
+                "turnovers": 0
+            }
+        },
+        {
+            "home_team": "Team 3",
+            "away_team": "Team 4",
+            "home_score": 0,
+            "away_score": 14,
+            "winner": "Team 4",
+            "plays": 174,
+            "home_stats": {
+                "total_yards": 17,
+                "passing_yards": 11,
+                "rushing_yards": 6,
+                "turnovers": 0
+            },
+            "away_stats": {
+                "total_yards": 367,
+                "passing_yards": 176,
+                "rushing_yards": 191,
+                "turnovers": 0
+            }
+        },
+        {
+            "home_team": "Team 4",
+            "away_team": "Team 2",
+            "home_score": 0,
+            "away_score": 49,
+            "winner": "Team 2",
+            "plays": 186,
+            "home_stats": {
+                "total_yards": 0,
+                "passing_yards": 0,
+                "rushing_yards": 0,
+                "turnovers": 0
+            },
+            "away_stats": {
+                "total_yards": 503,
+                "passing_yards": 231,
+                "rushing_yards": 272,
+                "turnovers": 0
+            }
+        },
+        {
+            "home_team": "Team 1",
+            "away_team": "Team 4",
+            "home_score": 0,
+            "away_score": 7,
+            "winner": "Team 4",
+            "plays": 181,
+            "home_stats": {
+                "total_yards": 55,
+                "passing_yards": 50,
+                "rushing_yards": 5,
+                "turnovers": 0
+            },
+            "away_stats": {
+                "total_yards": 493,
+                "passing_yards": 300,
+                "rushing_yards": 193,
+                "turnovers": 0
+            }
+        },
+        {
+            "home_team": "Team 3",
+            "away_team": "Team 4",
+            "home_score": 0,
+            "away_score": 28,
+            "winner": "Team 4",
+            "plays": 168,
+            "home_stats": {
+                "total_yards": 48,
+                "passing_yards": 30,
+                "rushing_yards": 18,
+                "turnovers": 0
+            },
+            "away_stats": {
+                "total_yards": 442,
+                "passing_yards": 271,
+                "rushing_yards": 171,
+                "turnovers": 0
+            }
+        },
+        {
+            "home_team": "Team 1",
+            "away_team": "Team 2",
+            "home_score": 0,
+            "away_score": 28,
+            "winner": "Team 2",
+            "plays": 170,
+            "home_stats": {
+                "total_yards": 28,
+                "passing_yards": 21,
+                "rushing_yards": 7,
+                "turnovers": 0
+            },
+            "away_stats": {
+                "total_yards": 459,
+                "passing_yards": 250,
+                "rushing_yards": 209,
+                "turnovers": 0
+            }
+        },
+        {
+            "home_team": "Team 2",
+            "away_team": "Team 1",
+            "home_score": 0,
+            "away_score": 7,
+            "winner": "Team 1",
+            "plays": 165,
+            "home_stats": {
+                "total_yards": 7,
+                "passing_yards": 6,
+                "rushing_yards": 1,
+                "turnovers": 0
+            },
+            "away_stats": {
+                "total_yards": 445,
+                "passing_yards": 242,
+                "rushing_yards": 203,
+                "turnovers": 0
+            }
+        },
+        {
+            "home_team": "Team 3",
+            "away_team": "Team 1",
+            "home_score": 0,
+            "away_score": 14,
+            "winner": "Team 1",
+            "plays": 173,
+            "home_stats": {
+                "total_yards": 29,
+                "passing_yards": 22,
+                "rushing_yards": 7,
+                "turnovers": 0
+            },
+            "away_stats": {
+                "total_yards": 572,
+                "passing_yards": 353,
+                "rushing_yards": 219,
+                "turnovers": 0
+            }
+        },
+        {
+            "home_team": "Team 2",
+            "away_team": "Team 1",
+            "home_score": 0,
+            "away_score": 0,
+            "winner": "Tie",
+            "plays": 160,
+            "home_stats": {
+                "total_yards": 22,
+                "passing_yards": 8,
+                "rushing_yards": 14,
+                "turnovers": 0
+            },
+            "away_stats": {
+                "total_yards": 395,
+                "passing_yards": 164,
+                "rushing_yards": 231,
+                "turnovers": 0
+            }
+        }
+    ],
+    "standings": [
+        {
+            "team": "Team 4",
+            "wins": 6,
+            "losses": 2,
+            "ties": 0,
+            "pct": 0.75,
+            "total_yards": 442,
+            "passing_yards": 271,
+            "rushing_yards": 171
+        },
+        {
+            "team": "Team 2",
+            "wins": 13,
+            "losses": 5,
+            "ties": 1,
+            "pct": 0.711,
+            "total_yards": 22,
+            "passing_yards": 8,
+            "rushing_yards": 14
+        },
+        {
+            "team": "Team 3",
+            "wins": 3,
+            "losses": 5,
+            "ties": 0,
+            "pct": 0.375,
+            "total_yards": 29,
+            "passing_yards": 22,
+            "rushing_yards": 7
+        },
+        {
+            "team": "Team 1",
+            "wins": 4,
+            "losses": 14,
+            "ties": 1,
+            "pct": 0.237,
+            "total_yards": 395,
+            "passing_yards": 164,
+            "rushing_yards": 231
+        }
+    ]
+}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Season Simulation Results{% endblock %}
+
+{% block content %}
+<h2>Season Simulation Results</h2>
+
+{% if results %}
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Season Standings</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Team</th>
+                        <th>Wins</th>
+                        <th>Losses</th>
+                        <th>Ties</th>
+                        <th>Win %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for team in results.standings %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ team.team }}</td>
+                        <td>{{ team.wins }}</td>
+                        <td>{{ team.losses }}</td>
+                        <td>{{ team.ties }}</td>
+                        <td>{{ team.pct }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% if 'games' in results %}
+    <div class="card">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0">Game Results</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for game in results.games %}
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ game.home_team }} vs {{ game.away_team }}</h5>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6>{{ game.home_team }}</h6>
+                                    <h3>{{ game.home_score }}</h3>
+                                </div>
+                                <div>
+                                    <h6>{{ game.away_team }}</h6>
+                                    <h3>{{ game.away_score }}</h3>
+                                </div>
+                            </div>
+                            <p class="text-center mt-2">
+                                Winner: <strong>{{ game.winner }}</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% else %}
+    <div class="alert alert-warning">
+        No season results found. <a href="{{ url_for('season_setup') }}">Run a new season simulation</a>
+    </div>
+{% endif %}
+
+<div class="mt-4">
+    <a href="{{ url_for('season_setup') }}" class="btn btn-primary">Run Another Season</a>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">Return to Home</a>
+</div>
+{% endblock %}

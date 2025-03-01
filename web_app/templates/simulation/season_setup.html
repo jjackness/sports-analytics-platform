@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Season Simulation{% endblock %}
+
+{% block content %}
+<h2>Season Simulation</h2>
+<p>Configure your season simulation settings below.</p>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            <div class="mb-3">
+                <label for="num_games" class="form-label">Number of Games Per Team</label>
+                <input type="number" class="form-control" id="num_games" name="num_games" min="1" max="16" value="4">
+                <div class="form-text">How many games should each team play in the season?</div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Run Season Simulation</button>
+        </form>
+    </div>
+</div>
+
+<div class="mt-4">
+    <h4>Available Teams</h4>
+    <div class="row">
+        {% for team_id in teams %}
+        <div class="col-md-3 mb-2">
+            <div class="card">
+                <div class="card-body py-2">
+                    <h6 class="card-title mb-0">Team {{ team_id }}</h6>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+down,distance_bucket,pass,run
+1,Short (1-2),0.0,100.0
+1,Medium (3-5),0.0,100.0
+1,Standard (6-10),0.0,100.0
+1,Long (11-15),,
+1,Very Long (16+),,
+2,Short (1-2),100.0,0.0
+2,Medium (3-5),100.0,0.0
+2,Standard (6-10),100.0,0.0
+2,Long (11-15),,
+2,Very Long (16+),,
+3,Short (1-2),0.0,100.0
+3,Medium (3-5),0.0,100.0
+3,Standard (6-10),0.0,100.0
+3,Long (11-15),,
+3,Very Long (16+),,
+4,Short (1-2),100.0,0.0
+4,Medium (3-5),100.0,0.0
+4,Standard (6-10),100.0,0.0
+4,Long (11-15),,
+4,Very Long (16+),,

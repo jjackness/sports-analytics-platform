@@ -1,0 +1,208 @@
+{
+    "home_team": "Team 1",
+    "away_team": "Team 2",
+    "home_score": 0,
+    "away_score": 7,
+    "winner": "Team 2",
+    "plays": 181,
+    "home_stats": {
+        "total_yards": 5,
+        "passing_yards": 0,
+        "rushing_yards": 5,
+        "turnovers": 0,
+        "time_of_possession": 0,
+        "first_downs": 0
+    },
+    "away_stats": {
+        "total_yards": 378,
+        "passing_yards": 195,
+        "rushing_yards": 183,
+        "turnovers": 0,
+        "time_of_possession": 0,
+        "first_downs": 0
+    },
+    "home_player_stats": [
+        {
+            "id": "team_1_QB_1",
+            "name": "Player team_1_QB_1",
+            "position": "QB",
+            "team": "team_1",
+            "has_stats": true,
+            "stats": {
+                "passing_attempts": 2,
+                "passing_completions": 0,
+                "passing_yards": 0,
+                "passing_tds": 0,
+                "passing_ints": 0,
+                "comp_pct": 0.0,
+                "yards_per_attempt": 0.0,
+                "rushing_attempts": 0,
+                "rushing_yards": 0,
+                "rushing_tds": 0
+            },
+            "fantasy_points": 0.0
+        },
+        {
+            "id": "team_1_RB_1",
+            "name": "Player team_1_RB_1",
+            "position": "RB",
+            "team": "team_1",
+            "has_stats": true,
+            "stats": {
+                "rushing_attempts": 2,
+                "rushing_yards": 5,
+                "rushing_tds": 0,
+                "yards_per_carry": 2.5,
+                "receiving_targets": 0,
+                "receiving_catches": 0,
+                "receiving_yards": 0,
+                "receiving_tds": 0
+            },
+            "fantasy_points": 0.5
+        },
+        {
+            "id": "team_1_WR_1",
+            "name": "Player team_1_WR_1",
+            "position": "WR",
+            "team": "team_1",
+            "has_stats": true,
+            "stats": {
+                "receiving_targets": 2,
+                "receiving_catches": 0,
+                "receiving_yards": 0,
+                "receiving_tds": 0,
+                "yards_per_catch": 0,
+                "catch_rate": 0.0,
+                "rushing_attempts": 0,
+                "rushing_yards": 0,
+                "rushing_tds": 0
+            },
+            "fantasy_points": 0.0
+        },
+        {
+            "id": "team_1_LB_1",
+            "name": "Player team_1_LB_1",
+            "position": "LB",
+            "team": "team_1",
+            "has_stats": true,
+            "stats": {
+                "tackles": 77,
+                "sacks": 0,
+                "interceptions": 0,
+                "forced_fumbles": 1,
+                "fumble_recoveries": 0,
+                "defensive_tds": 0
+            },
+            "fantasy_points": 0.0
+        },
+        {
+            "id": "team_1_CB_1",
+            "name": "Player team_1_CB_1",
+            "position": "CB",
+            "team": "team_1",
+            "has_stats": true,
+            "stats": {
+                "tackles": 43,
+                "sacks": 0,
+                "interceptions": 4,
+                "forced_fumbles": 0,
+                "fumble_recoveries": 0,
+                "defensive_tds": 0
+            },
+            "fantasy_points": 0.0
+        },
+        {
+            "id": "team_1_S_1",
+            "name": "Player team_1_S_1",
+            "position": "S",
+            "team": "team_1",
+            "has_stats": true,
+            "stats": {
+                "tackles": 6,
+                "sacks": 0,
+                "interceptions": 0,
+                "forced_fumbles": 0,
+                "fumble_recoveries": 0,
+                "defensive_tds": 0
+            },
+            "fantasy_points": 0.0
+        }
+    ],
+    "away_player_stats": [
+        {
+            "id": "team_2_QB_1",
+            "name": "Player team_2_QB_1",
+            "position": "QB",
+            "team": "team_2",
+            "has_stats": true,
+            "stats": {
+                "passing_attempts": 100,
+                "passing_completions": 43,
+                "passing_yards": 195,
+                "passing_tds": 0,
+                "passing_ints": 4,
+                "comp_pct": 43.0,
+                "yards_per_attempt": 1.9,
+                "rushing_attempts": 0,
+                "rushing_yards": 0,
+                "rushing_tds": 0
+            },
+            "fantasy_points": -0.20000000000000018
+        },
+        {
+            "id": "team_2_RB_1",
+            "name": "Player team_2_RB_1",
+            "position": "RB",
+            "team": "team_2",
+            "has_stats": true,
+            "stats": {
+                "rushing_attempts": 77,
+                "rushing_yards": 183,
+                "rushing_tds": 1,
+                "yards_per_carry": 2.4,
+                "receiving_targets": 0,
+                "receiving_catches": 0,
+                "receiving_yards": 0,
+                "receiving_tds": 0
+            },
+            "fantasy_points": 22.3
+        },
+        {
+            "id": "team_2_WR_1",
+            "name": "Player team_2_WR_1",
+            "position": "WR",
+            "team": "team_2",
+            "has_stats": true,
+            "stats": {
+                "receiving_targets": 100,
+                "receiving_catches": 43,
+                "receiving_yards": 195,
+                "receiving_tds": 0,
+                "yards_per_catch": 4.5,
+                "catch_rate": 43.0,
+                "rushing_attempts": 0,
+                "rushing_yards": 0,
+                "rushing_tds": 0
+            },
+            "fantasy_points": 19.5
+        },
+        {
+            "id": "team_2_LB_1",
+            "name": "Player team_2_LB_1",
+            "position": "LB",
+            "team": "team_2",
+            "has_stats": true,
+            "stats": {
+                "tackles": 2,
+                "sacks": 0,
+                "interceptions": 0,
+                "forced_fumbles": 0,
+                "fumble_recoveries": 0,
+                "defensive_tds": 0
+            },
+            "fantasy_points": 0.0
+        }
+    ],
+    "simulation_type": "single",
+    "num_simulations": 1
+}
