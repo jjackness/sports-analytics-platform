@@ -8,33 +8,148 @@
     
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">
-            <h5>Summary</h5>
+            <h5>Game Summary</h5>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
                     <h5>{{ results.summary.num_games }} Games Simulated</h5>
                     <hr>
-                    <div class="row">
-                        <div class="col-md-5 text-center">
+                    <div class="row text-center">
+                        <div class="col-md-5">
                             <h4>{{ results.summary.home_team.name }}</h4>
-                            <p>Wins: {{ results.summary.home_team.wins }}</p>
-                            <p>Average Score: {{ results.summary.home_team.avg_score|round(1) }}</p>
+                            <h1>{{ results.summary.home_team.avg_score|round(1) }}</h1>
                         </div>
-                        <div class="col-md-2 text-center">
-                            <h4>VS</h4>
-                            <p>Ties: {{ results.summary.ties }}</p>
+                        <div class="col-md-2">
+                            <h5>VS</h5>
                         </div>
-                        <div class="col-md-5 text-center">
+                        <div class="col-md-5">
                             <h4>{{ results.summary.away_team.name }}</h4>
-                            <p>Wins: {{ results.summary.away_team.wins }}</p>
-                            <p>Average Score: {{ results.summary.away_team.avg_score|round(1) }}</p>
+                            <h1>{{ results.summary.away_team.avg_score|round(1) }}</h1>
                         </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <p>Wins: {{ results.summary.home_team.name }} {{ results.summary.home_team.wins }} ({{ (results.summary.home_team.wins / results.summary.num_games * 100)|round|int }}%) - 
+                        {{ results.summary.away_team.name }} {{ results.summary.away_team.wins }} ({{ (results.summary.away_team.wins / results.summary.num_games * 100)|round|int }}%)</p>
+                        <p>Ties: {{ results.summary.ties }} ({{ (results.summary.ties / results.summary.num_games * 100)|round|int if results.summary.ties else 0 }}%)</p>
+                        <p class="text-muted">Average plays per game: {{ avg_plays }}</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    <!-- Team Statistics Section -->
+    {% if results.games %}
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>{{ results.summary.home_team.name }} Average Statistics</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Total Yards</th>
+                                <td>
+                                    {% if 'total_yards_avg' in results.summary.home_team %}
+                                        {{ results.summary.home_team.total_yards_avg|round|int }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Passing Yards</th>
+                                <td>
+                                    {% if 'passing_yards_avg' in results.summary.home_team %}
+                                        {{ results.summary.home_team.passing_yards_avg|round|int }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Rushing Yards</th>
+                                <td>
+                                    {% if 'rushing_yards_avg' in results.summary.home_team %}
+                                        {{ results.summary.home_team.rushing_yards_avg|round|int }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Turnovers</th>
+                                <td>
+                                    {% if 'turnovers_avg' in results.summary.home_team %}
+                                        {{ results.summary.home_team.turnovers_avg|round|int }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>{{ results.summary.away_team.name }} Average Statistics</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Total Yards</th>
+                                <td>
+                                    {% if 'total_yards_avg' in results.summary.away_team %}
+                                        {{ results.summary.away_team.total_yards_avg|round|int }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Passing Yards</th>
+                                <td>
+                                    {% if 'passing_yards_avg' in results.summary.away_team %}
+                                        {{ results.summary.away_team.passing_yards_avg|round|int }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Rushing Yards</th>
+                                <td>
+                                    {% if 'rushing_yards_avg' in results.summary.away_team %}
+                                        {{ results.summary.away_team.rushing_yards_avg|round|int }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Turnovers</th>
+                                <td>
+                                    {% if 'turnovers_avg' in results.summary.away_team %}
+                                        {{ results.summary.away_team.turnovers_avg|round|int }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
     
     <div class="card mb-4">
         <div class="card-header bg-success text-white">
@@ -44,50 +159,102 @@
             <p>Based on {{ results.summary.num_games }} simulated games between {{ results.summary.home_team.name }} and {{ results.summary.away_team.name }}</p>
             
             {% if players %}
-            <div class="table-responsive">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>Player</th>
-                            <th>Pos</th>
-                            <th>Team</th>
-                            <th>Fantasy Pts</th>
-                            <th>Min</th>
-                            <th>Max</th>
-                            <th>Std Dev</th>
-                            <th colspan="3">Key Stats (avg per game)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for player in players %}
-                        <tr>
-                            <td>{{ player.name }}</td>
-                            <td>{{ player.position }}</td>
-                            <td>{{ player.team }}</td>
-                            <td><b>{{ player.stats.fantasy_pts_avg|round(1) }}</b></td>
-                            <td>{{ player.stats.fantasy_pts_min|round(1) }}</td>
-                            <td>{{ player.stats.fantasy_pts_max|round(1) }}</td>
-                            <td>{{ player.stats.fantasy_pts_std|round(2) }}</td>
-                            
-                            {% if player.position == 'QB' %}
-                                <td>{{ player.stats.pass_comp_avg|round(1) }}/{{ player.stats.pass_att_avg|round(1) }}</td>
-                                <td>{{ player.stats.pass_yds_avg|round(1) }} yds</td>
-                                <td>{{ player.stats.pass_tds_avg|round(1) }} TD</td>
-                            {% elif player.position == 'RB' %}
-                                <td>{{ player.stats.rush_att_avg|round(1) }} att</td>
-                                <td>{{ player.stats.rush_yds_avg|round(1) }} yds</td>
-                                <td>{{ player.stats.rush_tds_avg|round(2) }} TD</td>
-                            {% elif player.position in ['WR', 'TE'] %}
-                                <td>{{ player.stats.rec_avg|round(1) }} rec</td>
-                                <td>{{ player.stats.rec_yds_avg|round(1) }} yds</td>
-                                <td>{{ player.stats.rec_tds_avg|round(2) }} TD</td>
-                            {% else %}
-                                <td colspan="3">No stats available</td>
-                            {% endif %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <ul class="nav nav-tabs" id="playerStatsTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="offense-tab" data-bs-toggle="tab" data-bs-target="#offense" type="button" role="tab" aria-controls="offense" aria-selected="true">Offensive Players</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="defense-tab" data-bs-toggle="tab" data-bs-target="#defense" type="button" role="tab" aria-controls="defense" aria-selected="false">Defensive Players</button>
+                </li>
+            </ul>
+            
+            <div class="tab-content mt-3" id="playerStatsContent">
+                <!-- Offensive Players Tab -->
+                <div class="tab-pane fade show active" id="offense" role="tabpanel" aria-labelledby="offense-tab">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>Pos</th>
+                                    <th>Team</th>
+                                    <th>Fantasy Pts</th>
+                                    <th>Min</th>
+                                    <th>Max</th>
+                                    <th>Expected Range</th>
+                                    <th colspan="3">Key Stats (avg per game)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for player in players %}
+                                {% if player.position in ['QB', 'RB', 'WR', 'TE'] %}
+                                <tr>
+                                    <td>{{ player.name }}</td>
+                                    <td>{{ player.position }}</td>
+                                    <td>{{ player.team }}</td>
+                                    <td><b>{{ player.stats.fantasy_pts_avg|round(1) }}</b></td>
+                                    <td>{{ player.stats.fantasy_pts_min|round(1) }}</td>
+                                    <td>{{ player.stats.fantasy_pts_max|round(1) }}</td>
+                                    <td>{{ player.stats.fantasy_pts_range_low|round(1) }} - {{ player.stats.fantasy_pts_range_high|round(1) }}</td>
+                                    
+                                    {% if player.position == 'QB' %}
+                                        <td>{{ player.stats.pass_yards_avg|round(1) }} pass yds</td>
+                                        <td>{{ player.stats.pass_tds_avg|round(1) }} pass TD</td>
+                                        <td>{{ player.stats.interceptions_avg|round(1) }} INT</td>
+                                    {% elif player.position == 'RB' %}
+                                        <td>{{ player.stats.rush_yards_avg|round(1) }} rush yds</td>
+                                        <td>{{ player.stats.rush_tds_avg|round(2) }} rush TD</td>
+                                        <td>{{ player.stats.receptions_avg|round(1) }} rec, {{ player.stats.receiving_yards_avg|round(1) }} yds, {{ player.stats.receiving_tds_avg|round(2) }} TD</td>
+                                    {% elif player.position in ['WR', 'TE'] %}
+                                        <td>{{ player.stats.receptions_avg|round(1) }} rec</td>
+                                        <td>{{ player.stats.receiving_yards_avg|round(1) }} rec yds</td>
+                                        <td>{{ player.stats.receiving_tds_avg|round(2) }} TD</td>
+                                    {% else %}
+                                        <td colspan="3">No stats available</td>
+                                    {% endif %}
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Defensive Players Tab -->
+                <div class="tab-pane fade" id="defense" role="tabpanel" aria-labelledby="defense-tab">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>Pos</th>
+                                    <th>Team</th>
+                                    <th>Tackles</th>
+                                    <th>Sacks</th>
+                                    <th>INT</th>
+                                    <th>FF</th>
+                                    <th>FR</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for player in players %}
+                                {% if player.position in ['LB', 'DL', 'CB', 'S'] %}
+                                <tr>
+                                    <td>{{ player.name }}</td>
+                                    <td>{{ player.position }}</td>
+                                    <td>{{ player.team }}</td>
+                                    <td>{{ player.stats.tackles_avg|round(1) }}</td>
+                                    <td>{{ player.stats.sacks_avg|round(1) }}</td>
+                                    <td>{{ player.stats.interceptions_avg|round(1) }}</td>
+                                    <td>{{ player.stats.forced_fumbles_avg|round(1) }}</td>
+                                    <td>{{ player.stats.fumble_recoveries_avg|round(1) }}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
             {% else %}
             <div class="alert alert-info">
