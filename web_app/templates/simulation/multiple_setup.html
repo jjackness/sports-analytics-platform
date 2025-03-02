@@ -15,7 +15,7 @@
                     <select class="form-select" id="home_team" name="home_team" required>
                         <option value="" selected disabled>Select Home Team</option>
                         {% for team_id in teams %}
-                        <option value="{{ team_id }}">{{ sim_engine.teams[team_id].name }}</option>
+                        <option value="{{ team_id }}">Team {{ team_id }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -25,7 +25,7 @@
                     <select class="form-select" id="away_team" name="away_team" required>
                         <option value="" selected disabled>Select Away Team</option>
                         {% for team_id in teams %}
-                        <option value="{{ team_id }}">{{ sim_engine.teams[team_id].name }}</option>
+                        <option value="{{ team_id }}">Team {{ team_id }}</option>
                         {% endfor %}
                     </select>
                 </div>

@@ -8,7 +8,7 @@
 
 <div class="card">
     <div class="card-body">
-        <form method="post">
+        <form method="post" action="{{ url_for('simulation.run_simulation') }}">
             <div class="mb-3">
                 <label for="home_team" class="form-label">Home Team</label>
                 <select class="form-select" id="home_team" name="home_team" required>

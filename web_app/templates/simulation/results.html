@@ -48,14 +48,14 @@
             <div class="card-body">
                 <div class="row text-center">
                     <div class="col-5">
-                        <h5>{{ results.home_team }}</h5>
+                        <h5>{{ results.home_team_name }}</h5>
                         <h1>{{ results.home_score }}</h1>
                     </div>
                     <div class="col-2">
                         <h5>VS</h5>
                     </div>
                     <div class="col-5">
-                        <h5>{{ results.away_team }}</h5>
+                        <h5>{{ results.away_team_name }}</h5>
                         <h1>{{ results.away_score }}</h1>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5>{{ results.home_team }} Statistics</h5>
+                        <h5>{{ results.home_team_name }} Statistics</h5>
                     </div>
                     <div class="card-body">
                         <table class="table">
@@ -100,7 +100,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5>{{ results.away_team }} Statistics</h5>
+                        <h5>{{ results.away_team_name }} Statistics</h5>
                     </div>
                     <div class="card-body">
                         <table class="table">
@@ -150,7 +150,7 @@
                         <div class="row">
                             <!-- Home Team Offense -->
                             <div class="col-md-6">
-                                <h5>{{ results.home_team }} Offense</h5>
+                                <h5>{{ results.home_team_name }} Offense</h5>
                                 {% if results.home_player_stats|default([])|length > 0 %}
                                     <div class="accordion" id="homeOffenseAccordion">
                                         <!-- QBs Section -->
@@ -277,7 +277,7 @@
                             
                             <!-- Away Team Offense -->
                             <div class="col-md-6">
-                                <h5>{{ results.away_team }} Offense</h5>
+                                <h5>{{ results.away_team_name }} Offense</h5>
                                 {% if results.away_player_stats|default([])|length > 0 %}
                                     <div class="accordion" id="awayOffenseAccordion">
                                         <!-- QBs Section -->
@@ -409,7 +409,7 @@
                         <div class="row">
                             <!-- Home Team Defense -->
                             <div class="col-md-6">
-                                <h5>{{ results.home_team }} Defense</h5>
+                                <h5>{{ results.home_team_name }} Defense</h5>
                                 {% if results.home_player_stats|default([])|length > 0 %}
                                     <table class="table table-sm">
                                         <thead>
@@ -448,7 +448,7 @@
                             
                             <!-- Away Team Defense -->
                             <div class="col-md-6">
-                                <h5>{{ results.away_team }} Defense</h5>
+                                <h5>{{ results.away_team_name }} Defense</h5>
                                 {% if results.away_player_stats|default([])|length > 0 %}
                                     <table class="table table-sm">
                                         <thead>
@@ -566,12 +566,12 @@
     {% endif %}
 {% else %}
     <div class="alert alert-warning">
-        No simulation results found. <a href="{{ url_for('simulation_setup') }}">Run a new simulation</a>
+        No simulation results found. <a href="{{ url_for('simulation.new_simulation') }}">Run a new simulation</a>
     </div>
 {% endif %}
 
 <div class="mt-4">
-    <a href="{{ url_for('simulation_setup') }}" class="btn btn-primary">Run Another Simulation</a>
+    <a href="{{ url_for('simulation.new_simulation') }}" class="btn btn-primary">Run Another Simulation</a>
     <a href="{{ url_for('index') }}" class="btn btn-secondary">Return to Home</a>
 </div>
 {% endblock %}

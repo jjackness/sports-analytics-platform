@@ -27,9 +27,9 @@
                             Simulation
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="simulationDropdown">
-                            <li><a class="dropdown-item" href="{{ url_for('simulation_setup') }}">New Simulation</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('simulation_results', simulation_id='latest') }}">View Results</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('season_setup') }}">Season Simulation</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('simulation.new_simulation') }}">New Simulation</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('simulation.new_multiple_simulation') }}">Multiple Simulations</a></li>
+                            <li><a class="dropdown-item" href="#">View Results</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

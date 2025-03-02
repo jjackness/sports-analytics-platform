@@ -135,159 +135,159 @@ class SimulationEngine:
         """
         return self.default_players.get(team_id, [])
     
-def simulate_game(self, home_team, away_team, verbose=False):
-    """
-    Simulate a complete football game between two teams
-    
-    Args:
-        home_team (Team or str): Home team or team ID
-        away_team (Team or str): Away team or team ID
-        verbose (bool): Whether to include detailed play-by-play information
+    def simulate_game(self, home_team, away_team, verbose=False):
+        """
+        Simulate a complete football game between two teams
         
-    Returns:
-        dict: Game results
-    """
-    from models.game import Game
-    
-    # Handle string team IDs by getting the actual team objects
-    if isinstance(home_team, str):
-        home_team = self.get_team(home_team)
-    if isinstance(away_team, str):
-        away_team = self.get_team(away_team)
+        Args:
+            home_team (Team or str): Home team or team ID
+            away_team (Team or str): Away team or team ID
+            verbose (bool): Whether to include detailed play-by-play information
+            
+        Returns:
+            dict: Game results
+        """
+        from models.game import Game
         
-    # Ensure we have valid team objects
-    if not home_team or not away_team:
-        raise ValueError("Invalid team(s) provided for simulation")
-    
-    # Get players for both teams
-    home_players = self.get_players_for_team(home_team.id)
-    away_players = self.get_players_for_team(away_team.id)
-    
-    # Initialize player stats
-    player_stats = self.initialize_player_stats(home_players + away_players)
-    
-    # Create a new game object using your existing Game class
-    game = Game(home_team=home_team, away_team=away_team)
-    game.home_score = 0
-    game.away_score = 0
-    
-    # Initialization based on your existing code structure
-    game.current_possession = random.choice([home_team.id, away_team.id])
-    game.field_position = 25  # Starting at the 25 yard line
-    game.current_down = 1
-    game.yards_to_first = 10
-    game.game_clock = self.parameters['quarters'] * self.parameters['quarter_length'] * 60  # in seconds
-    
-    # Tracking for play history
-    play_history = []
-    
-    # Play until game ends
-    max_plays = 150  # Safety limit to prevent infinite loops
-    play_count = 0
-    
-    while game.game_clock > 0 and play_count < max_plays:
-        # Get offensive and defensive teams
-        if game.current_possession == home_team.id:
-            offensive_team = home_team
-            offensive_players = home_players
-            defensive_team = away_team
-        else:
-            offensive_team = away_team
-            offensive_players = away_players
-            defensive_team = home_team
+        # Handle string team IDs by getting the actual team objects
+        if isinstance(home_team, str):
+            home_team = self.get_team(home_team)
+        if isinstance(away_team, str):
+            away_team = self.get_team(away_team)
         
-        # Simulate a play
-        play_result = self.simulate_play(game, offensive_team, defensive_team)
+        # Ensure we have valid team objects
+        if not home_team or not away_team:
+            raise ValueError("Invalid team(s) provided for simulation")
         
-        # Update player statistics based on the play
-        play_result = self.update_player_stats(play_result, offensive_players, player_stats)
+        # Get players for both teams
+        home_players = self.get_players_for_team(home_team.id)
+        away_players = self.get_players_for_team(away_team.id)
         
-        play_history.append(play_result)
-        play_count += 1
+        # Initialize player stats
+        player_stats = self.initialize_player_stats(home_players + away_players)
         
-        # Update game clock
-        game.game_clock -= self.parameters.get('time_between_plays', 40)
+        # Create a new game object using your existing Game class
+        game = Game(home_team=home_team, away_team=away_team)
+        game.home_score = 0
+        game.away_score = 0
         
-        # Handle possession changes, scoring, etc.
-        self.process_play_result(game, play_result, offensive_team, defensive_team)
-    
-    # Calculate fantasy points for players
-    fantasy_points = self.calculate_fantasy_points_from_stats(player_stats)
-    
-    # Prepare game results
-    results = {
-        'game_id': str(uuid.uuid4()),
-        'date': datetime.now().isoformat(),
-        'home_team': {
-            'id': home_team.id,
-            'name': home_team.name,
-            'score': game.home_score
-        },
-        'away_team': {
-            'id': away_team.id,
-            'name': away_team.name,
-            'score': game.away_score
-        },
-        'play_history': play_history if verbose else [],
-        'total_plays': play_count,
-        'player_stats': player_stats,
-        'fantasy_points': fantasy_points
-    }
-    
-    # Format player stats for the web interface
-    web_player_stats = []
-    for player_id, stats in player_stats.items():
-        # Create a web-friendly format
-        web_stats = {
-            'id': player_id,
-            'name': stats.get('player_name', 'Unknown'),
-            'team': stats.get('team_id', ''),
-            'position': stats.get('position', ''),
-            'stats': {}
+        # Initialization based on your existing code structure
+        game.current_possession = random.choice([home_team.id, away_team.id])
+        game.field_position = 25  # Starting at the 25 yard line
+        game.current_down = 1
+        game.yards_to_first = 10
+        game.game_clock = self.parameters['quarters'] * self.parameters['quarter_length'] * 60  # in seconds
+        
+        # Tracking for play history
+        play_history = []
+        
+        # Play until game ends
+        max_plays = 150  # Safety limit to prevent infinite loops
+        play_count = 0
+        
+        while game.game_clock > 0 and play_count < max_plays:
+            # Get offensive and defensive teams
+            if game.current_possession == home_team.id:
+                offensive_team = home_team
+                offensive_players = home_players
+                defensive_team = away_team
+            else:
+                offensive_team = away_team
+                offensive_players = away_players
+                defensive_team = home_team
+            
+            # Simulate a play
+            play_result = self.simulate_play(game, offensive_team, defensive_team)
+            
+            # Update player statistics based on the play
+            play_result = self.update_player_stats(play_result, offensive_players, player_stats)
+            
+            play_history.append(play_result)
+            play_count += 1
+            
+            # Update game clock
+            game.game_clock -= self.parameters.get('time_between_plays', 40)
+            
+            # Handle possession changes, scoring, etc.
+            self.process_play_result(game, play_result, offensive_team, defensive_team)
+        
+        # Calculate fantasy points for players
+        fantasy_points = self.calculate_fantasy_points_from_stats(player_stats)
+        
+        # Prepare game results
+        results = {
+            'game_id': str(uuid.uuid4()),
+            'date': datetime.now().isoformat(),
+            'home_team': {
+                'id': home_team.id,
+                'name': home_team.name,
+                'score': game.home_score
+            },
+            'away_team': {
+                'id': away_team.id,
+                'name': away_team.name,
+                'score': game.away_score
+            },
+            'play_history': play_history if verbose else [],
+            'total_plays': play_count,
+            'player_stats': player_stats,
+            'fantasy_points': fantasy_points
         }
         
-        # Add position-specific stats
-        if stats.get('position') == 'QB':
-            web_stats['stats'] = {
-                'pass_att': stats.get('pass_attempts', 0),
-                'pass_comp': stats.get('pass_completions', 0),
-                'pass_yds': stats.get('pass_yards', 0),
-                'pass_tds': stats.get('pass_tds', 0),
-                'int': stats.get('interceptions', 0),
-                'rush_att': stats.get('rush_attempts', 0),
-                'rush_yds': stats.get('rush_yards', 0),
-                'rush_tds': stats.get('rush_tds', 0),
-                'fantasy_pts': fantasy_points.get(player_id, 0)
+        # Format player stats for the web interface
+        web_player_stats = []
+        for player_id, stats in player_stats.items():
+            # Create a web-friendly format
+            web_stats = {
+                'id': player_id,
+                'name': stats.get('player_name', 'Unknown'),
+                'team': stats.get('team_id', ''),
+                'position': stats.get('position', ''),
+                'stats': {}
             }
-        elif stats.get('position') == 'RB':
-            web_stats['stats'] = {
-                'rush_att': stats.get('rush_attempts', 0),
-                'rush_yds': stats.get('rush_yards', 0),
-                'rush_tds': stats.get('rush_tds', 0),
-                'rec': stats.get('receptions', 0),
-                'rec_yds': stats.get('receiving_yards', 0),
-                'rec_tds': stats.get('receiving_tds', 0),
-                'fumbles': stats.get('fumbles', 0),
-                'fantasy_pts': fantasy_points.get(player_id, 0)
-            }
-        elif stats.get('position') in ['WR', 'TE']:
-            web_stats['stats'] = {
-                'targets': stats.get('targets', 0),
-                'rec': stats.get('receptions', 0),
-                'rec_yds': stats.get('receiving_yards', 0),
-                'rec_tds': stats.get('receiving_tds', 0),
-                'rush_att': stats.get('rush_attempts', 0),
-                'rush_yds': stats.get('rush_yards', 0),
-                'rush_tds': stats.get('rush_tds', 0),
-                'fantasy_pts': fantasy_points.get(player_id, 0)
-            }
+            
+            # Add position-specific stats
+            if stats.get('position') == 'QB':
+                web_stats['stats'] = {
+                    'pass_att': stats.get('pass_attempts', 0),
+                    'pass_comp': stats.get('pass_completions', 0),
+                    'pass_yds': stats.get('pass_yards', 0),
+                    'pass_tds': stats.get('pass_tds', 0),
+                    'int': stats.get('interceptions', 0),
+                    'rush_att': stats.get('rush_attempts', 0),
+                    'rush_yds': stats.get('rush_yards', 0),
+                    'rush_tds': stats.get('rush_tds', 0),
+                    'fantasy_pts': fantasy_points.get(player_id, 0)
+                }
+            elif stats.get('position') == 'RB':
+                web_stats['stats'] = {
+                    'rush_att': stats.get('rush_attempts', 0),
+                    'rush_yds': stats.get('rush_yards', 0),
+                    'rush_tds': stats.get('rush_tds', 0),
+                    'rec': stats.get('receptions', 0),
+                    'rec_yds': stats.get('receiving_yards', 0),
+                    'rec_tds': stats.get('receiving_tds', 0),
+                    'fumbles': stats.get('fumbles', 0),
+                    'fantasy_pts': fantasy_points.get(player_id, 0)
+                }
+            elif stats.get('position') in ['WR', 'TE']:
+                web_stats['stats'] = {
+                    'targets': stats.get('targets', 0),
+                    'rec': stats.get('receptions', 0),
+                    'rec_yds': stats.get('receiving_yards', 0),
+                    'rec_tds': stats.get('receiving_tds', 0),
+                    'rush_att': stats.get('rush_attempts', 0),
+                    'rush_yds': stats.get('rush_yards', 0),
+                    'rush_tds': stats.get('rush_tds', 0),
+                    'fantasy_pts': fantasy_points.get(player_id, 0)
+                }
+            
+            web_player_stats.append(web_stats)
         
-        web_player_stats.append(web_stats)
-    
-    # Add web-formatted player stats to results
-    results['player_stats_web'] = web_player_stats
-    
-    return results
+        # Add web-formatted player stats to results
+        results['player_stats_web'] = web_player_stats
+        
+        return results
 
     def initialize_player_stats(self, players):
         """
@@ -1151,8 +1151,8 @@ def simulate_game(self, home_team, away_team, verbose=False):
         
         return filepath
     
-def run_multiple_simulations(self, home_team, away_team, num_sims=1, verbose=False):
-    """
-    Alias for simulate_multiple_games to maintain compatibility with web app
-    """
-    return self.simulate_multiple_games(home_team, away_team, num_games=num_sims, verbose=verbose)    
+    def run_multiple_simulations(self, home_team, away_team, num_sims=1, verbose=False):
+        """
+        Alias for simulate_multiple_games to maintain compatibility with web app
+        """
+        return self.simulate_multiple_games(home_team, away_team, num_games=num_sims, verbose=verbose)    
