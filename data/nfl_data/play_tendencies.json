@@ -1,0 +1,92 @@
+{
+  "1": {
+    "total_plays": 5819,
+    "pass_percentage": 52.84413129403678,
+    "run_percentage": 47.15586870596322,
+    "distance_7_to_10": {
+      "total_plays": 5819,
+      "pass_percentage": 52.84413129403678,
+      "run_percentage": 47.15586870596322
+    }
+  },
+  "2": {
+    "total_plays": 4377,
+    "pass_percentage": 59.60703678318483,
+    "run_percentage": 40.39296321681517,
+    "distance_1_to_3": {
+      "total_plays": 515,
+      "pass_percentage": 45.8252427184466,
+      "run_percentage": 54.1747572815534
+    },
+    "distance_4_to_6": {
+      "total_plays": 987,
+      "pass_percentage": 53.596757852077005,
+      "run_percentage": 46.403242147923
+    },
+    "distance_7_to_10": {
+      "total_plays": 2402,
+      "pass_percentage": 62.53122398001665,
+      "run_percentage": 37.468776019983345
+    },
+    "distance_11_to_15": {
+      "total_plays": 473,
+      "pass_percentage": 72.3044397463002,
+      "run_percentage": 27.695560253699792
+    }
+  },
+  "3": {
+    "total_plays": 3526,
+    "pass_percentage": 72.23482699943278,
+    "run_percentage": 27.765173000567216,
+    "distance_1_to_3": {
+      "total_plays": 1181,
+      "pass_percentage": 59.61049957662997,
+      "run_percentage": 40.38950042337002
+    },
+    "distance_4_to_6": {
+      "total_plays": 865,
+      "pass_percentage": 72.60115606936417,
+      "run_percentage": 27.398843930635834
+    },
+    "distance_7_to_10": {
+      "total_plays": 923,
+      "pass_percentage": 76.92307692307693,
+      "run_percentage": 23.076923076923077
+    },
+    "distance_11_to_15": {
+      "total_plays": 450,
+      "pass_percentage": 91.33333333333333,
+      "run_percentage": 8.666666666666668
+    },
+    "distance_16_to_100": {
+      "total_plays": 107,
+      "pass_percentage": 87.85046728971963,
+      "run_percentage": 12.149532710280374
+    }
+  },
+  "4": {
+    "total_plays": 737,
+    "pass_percentage": 60.379918588873814,
+    "run_percentage": 39.620081411126186,
+    "distance_1_to_3": {
+      "total_plays": 437,
+      "pass_percentage": 54.46224256292906,
+      "run_percentage": 45.53775743707094
+    },
+    "distance_4_to_6": {
+      "total_plays": 173,
+      "pass_percentage": 60.115606936416185,
+      "run_percentage": 39.884393063583815
+    },
+    "distance_7_to_10": {
+      "total_plays": 99,
+      "pass_percentage": 83.83838383838383,
+      "run_percentage": 16.161616161616163
+    },
+    "distance_11_to_15": {
+      "total_plays": 28,
+      "pass_percentage": 71.42857142857143,
+      "run_percentage": 28.57142857142857
+    }
+  }
+}
