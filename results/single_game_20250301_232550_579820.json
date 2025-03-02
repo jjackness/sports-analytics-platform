@@ -1,0 +1,928 @@
+{
+    "game_id": "77d7ac94-5d74-4fe2-9b89-0a9b7bb33558",
+    "date": "2025-03-01T23:25:50.583108",
+    "home_team": {
+        "id": "SF",
+        "name": "49ers",
+        "score": 7
+    },
+    "away_team": {
+        "id": "BAL",
+        "name": "Ravens",
+        "score": 37
+    },
+    "play_history": [
+        {
+            "play_type": "run",
+            "yards_gained": 0,
+            "down": 1,
+            "distance": 10,
+            "field_position": 25,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 3,
+            "down": 2,
+            "distance": 10,
+            "field_position": 25,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 9,
+            "down": 3,
+            "distance": 7,
+            "field_position": 28,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 8,
+            "down": 1,
+            "distance": 10,
+            "field_position": 37,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 3,
+            "down": 2,
+            "distance": 2,
+            "field_position": 45,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 3,
+            "down": 1,
+            "distance": 10,
+            "field_position": 48,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 0,
+            "down": 2,
+            "distance": 7,
+            "field_position": 51,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 0,
+            "down": 3,
+            "distance": 7,
+            "field_position": 51,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "punt",
+            "yards_gained": 0,
+            "down": 4,
+            "distance": 7,
+            "field_position": 51,
+            "possession_change": true,
+            "touchdown": false,
+            "result": "punt",
+            "punt_distance": 47
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 21,
+            "down": 1,
+            "distance": 10,
+            "field_position": 49,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": -5,
+            "down": 1,
+            "distance": 10,
+            "field_position": 70,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 23,
+            "down": 2,
+            "distance": 15,
+            "field_position": 65,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 0,
+            "down": 1,
+            "distance": 10,
+            "field_position": 88,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 7,
+            "down": 2,
+            "distance": 10,
+            "field_position": 88,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 3,
+            "down": 3,
+            "distance": 3,
+            "field_position": 95,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 0,
+            "down": 1,
+            "distance": 2,
+            "field_position": 98,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 2,
+            "down": 2,
+            "distance": 2,
+            "field_position": 98,
+            "possession_change": false,
+            "touchdown": true,
+            "result": "touchdown"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 13,
+            "down": 1,
+            "distance": 10,
+            "field_position": 25,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 19,
+            "down": 1,
+            "distance": 10,
+            "field_position": 38,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 13,
+            "down": 1,
+            "distance": 10,
+            "field_position": 57,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 10,
+            "down": 1,
+            "distance": 10,
+            "field_position": 70,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 2,
+            "down": 1,
+            "distance": 10,
+            "field_position": 80,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 18,
+            "down": 2,
+            "distance": 8,
+            "field_position": 82,
+            "possession_change": false,
+            "touchdown": true,
+            "result": "touchdown"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 3,
+            "down": 1,
+            "distance": 10,
+            "field_position": 25,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 10,
+            "down": 2,
+            "distance": 7,
+            "field_position": 28,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 0,
+            "down": 1,
+            "distance": 10,
+            "field_position": 38,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 7,
+            "down": 2,
+            "distance": 10,
+            "field_position": 38,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 13,
+            "down": 3,
+            "distance": 3,
+            "field_position": 45,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 7,
+            "down": 1,
+            "distance": 10,
+            "field_position": 58,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": -10,
+            "down": 2,
+            "distance": 3,
+            "field_position": 65,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 4,
+            "down": 3,
+            "distance": 13,
+            "field_position": 55,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "punt",
+            "yards_gained": 0,
+            "down": 4,
+            "distance": 9,
+            "field_position": 59,
+            "possession_change": true,
+            "touchdown": false,
+            "result": "punt",
+            "punt_distance": 39
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 18,
+            "down": 1,
+            "distance": 10,
+            "field_position": 41,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 20,
+            "down": 1,
+            "distance": 10,
+            "field_position": 59,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 8,
+            "down": 1,
+            "distance": 10,
+            "field_position": 79,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 2,
+            "down": 2,
+            "distance": 2,
+            "field_position": 87,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 11,
+            "down": 1,
+            "distance": 10,
+            "field_position": 89,
+            "possession_change": false,
+            "touchdown": true,
+            "result": "touchdown"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 0,
+            "down": 1,
+            "distance": 10,
+            "field_position": 25,
+            "possession_change": true,
+            "touchdown": false,
+            "turnover_type": "interception",
+            "result": "interception"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 3,
+            "down": 1,
+            "distance": 10,
+            "field_position": 75,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 0,
+            "down": 2,
+            "distance": 7,
+            "field_position": 78,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 0,
+            "down": 3,
+            "distance": 7,
+            "field_position": 78,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "field_goal",
+            "yards_gained": 0,
+            "down": 4,
+            "distance": 7,
+            "field_position": 78,
+            "possession_change": true,
+            "touchdown": false,
+            "result": "field_goal_good"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 21,
+            "down": 1,
+            "distance": 10,
+            "field_position": 22,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 2,
+            "down": 1,
+            "distance": 10,
+            "field_position": 43,
+            "possession_change": true,
+            "touchdown": false,
+            "turnover_type": "interception",
+            "result": "interception"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 3,
+            "down": 1,
+            "distance": 10,
+            "field_position": 57,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 0,
+            "down": 2,
+            "distance": 7,
+            "field_position": 60,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 3,
+            "down": 3,
+            "distance": 7,
+            "field_position": 60,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "field_goal",
+            "yards_gained": 0,
+            "down": 4,
+            "distance": 4,
+            "field_position": 63,
+            "possession_change": true,
+            "touchdown": false,
+            "result": "field_goal_missed"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 0,
+            "down": 1,
+            "distance": 10,
+            "field_position": 37,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": -4,
+            "down": 2,
+            "distance": 10,
+            "field_position": 37,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 3,
+            "down": 3,
+            "distance": 14,
+            "field_position": 33,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "punt",
+            "yards_gained": 0,
+            "down": 4,
+            "distance": 11,
+            "field_position": 36,
+            "possession_change": true,
+            "touchdown": false,
+            "result": "punt",
+            "punt_distance": 44
+        },
+        {
+            "play_type": "run",
+            "yards_gained": -6,
+            "down": 1,
+            "distance": 10,
+            "field_position": 64,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 3,
+            "down": 2,
+            "distance": 16,
+            "field_position": 58,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 9,
+            "down": 3,
+            "distance": 13,
+            "field_position": 61,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "field_goal",
+            "yards_gained": 0,
+            "down": 4,
+            "distance": 4,
+            "field_position": 70,
+            "possession_change": true,
+            "touchdown": false,
+            "result": "field_goal_good"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 2,
+            "down": 1,
+            "distance": 10,
+            "field_position": 30,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 0,
+            "down": 2,
+            "distance": 8,
+            "field_position": 32,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 0,
+            "down": 3,
+            "distance": 8,
+            "field_position": 32,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "punt",
+            "yards_gained": 0,
+            "down": 4,
+            "distance": 8,
+            "field_position": 32,
+            "possession_change": true,
+            "touchdown": false,
+            "result": "punt",
+            "punt_distance": 41
+        },
+        {
+            "play_type": "run",
+            "yards_gained": -2,
+            "down": 1,
+            "distance": 10,
+            "field_position": 68,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 22,
+            "down": 2,
+            "distance": 12,
+            "field_position": 66,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 12,
+            "down": 1,
+            "distance": 10,
+            "field_position": 88,
+            "possession_change": false,
+            "touchdown": true,
+            "result": "touchdown"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 3,
+            "down": 1,
+            "distance": 10,
+            "field_position": 25,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 3,
+            "down": 2,
+            "distance": 7,
+            "field_position": 28,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 0,
+            "down": 3,
+            "distance": 4,
+            "field_position": 31,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "punt",
+            "yards_gained": 0,
+            "down": 4,
+            "distance": 4,
+            "field_position": 31,
+            "possession_change": true,
+            "touchdown": false,
+            "result": "punt",
+            "punt_distance": 45
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 13,
+            "down": 1,
+            "distance": 10,
+            "field_position": 69,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 0,
+            "down": 1,
+            "distance": 10,
+            "field_position": 82,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 0,
+            "down": 2,
+            "distance": 10,
+            "field_position": 82,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 3,
+            "down": 3,
+            "distance": 10,
+            "field_position": 82,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "field_goal",
+            "yards_gained": 0,
+            "down": 4,
+            "distance": 7,
+            "field_position": 85,
+            "possession_change": true,
+            "touchdown": false,
+            "result": "field_goal_good"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 3,
+            "down": 1,
+            "distance": 10,
+            "field_position": 15,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 12,
+            "down": 2,
+            "distance": 7,
+            "field_position": 18,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 2,
+            "down": 1,
+            "distance": 10,
+            "field_position": 30,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 5,
+            "down": 2,
+            "distance": 8,
+            "field_position": 32,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 0,
+            "down": 3,
+            "distance": 3,
+            "field_position": 37,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "punt",
+            "yards_gained": 0,
+            "down": 4,
+            "distance": 3,
+            "field_position": 37,
+            "possession_change": true,
+            "touchdown": false,
+            "result": "punt",
+            "punt_distance": 38
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 5,
+            "down": 1,
+            "distance": 10,
+            "field_position": 63,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 13,
+            "down": 2,
+            "distance": 5,
+            "field_position": 68,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 13,
+            "down": 1,
+            "distance": 10,
+            "field_position": 81,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 6,
+            "down": 1,
+            "distance": 6,
+            "field_position": 94,
+            "possession_change": false,
+            "touchdown": true,
+            "result": "touchdown"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 3,
+            "down": 1,
+            "distance": 10,
+            "field_position": 25,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 0,
+            "down": 2,
+            "distance": 7,
+            "field_position": 28,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 4,
+            "down": 3,
+            "distance": 7,
+            "field_position": 28,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "punt",
+            "yards_gained": 0,
+            "down": 4,
+            "distance": 3,
+            "field_position": 32,
+            "possession_change": true,
+            "touchdown": false,
+            "result": "punt",
+            "punt_distance": 42
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 4,
+            "down": 1,
+            "distance": 10,
+            "field_position": 68,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "pass",
+            "yards_gained": 20,
+            "down": 2,
+            "distance": 6,
+            "field_position": 72,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 0,
+            "down": 1,
+            "distance": 8,
+            "field_position": 92,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        },
+        {
+            "play_type": "run",
+            "yards_gained": 6,
+            "down": 2,
+            "distance": 8,
+            "field_position": 92,
+            "possession_change": false,
+            "touchdown": false,
+            "result": "normal"
+        }
+    ],
+    "total_plays": 90,
+    "simulation_type": "single",
+    "num_simulations": 1
+}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}New Multiple Game Simulation{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>New Game Simulation</h1>
+    <p>Configure your simulation settings below.</p>
+    
+    <div class="card">
+        <div class="card-body">
+            <form action="{{ url_for('simulation.run_multiple_simulations') }}" method="post">
+                <div class="mb-3">
+                    <label for="home_team" class="form-label">Home Team</label>
+                    <select class="form-select" id="home_team" name="home_team" required>
+                        <option value="" selected disabled>Select Home Team</option>
+                        {% for team_id in teams %}
+                        <option value="{{ team_id }}">{{ sim_engine.teams[team_id].name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="away_team" class="form-label">Away Team</label>
+                    <select class="form-select" id="away_team" name="away_team" required>
+                        <option value="" selected disabled>Select Away Team</option>
+                        {% for team_id in teams %}
+                        <option value="{{ team_id }}">{{ sim_engine.teams[team_id].name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="num_sims" class="form-label">Number of Simulations</label>
+                    <input type="number" class="form-control" id="num_sims" name="num_sims" min="1" max="100" value="10" required>
+                    <div class="form-text">Choose 1 for a single game or more for statistical analysis.</div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Run Simulation</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

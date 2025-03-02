@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Multiple Simulation Results{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Multiple Game Simulation Results</h1>
+    
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5>Summary</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>{{ results.summary.num_games }} Games Simulated</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-5 text-center">
+                            <h4>{{ results.summary.home_team.name }}</h4>
+                            <p>Wins: {{ results.summary.home_team.wins }}</p>
+                            <p>Average Score: {{ results.summary.home_team.avg_score|round(1) }}</p>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <h4>VS</h4>
+                            <p>Ties: {{ results.summary.ties }}</p>
+                        </div>
+                        <div class="col-md-5 text-center">
+                            <h4>{{ results.summary.away_team.name }}</h4>
+                            <p>Wins: {{ results.summary.away_team.wins }}</p>
+                            <p>Average Score: {{ results.summary.away_team.avg_score|round(1) }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h5>Player Projections</h5>
+        </div>
+        <div class="card-body">
+            <p>Based on {{ results.summary.num_games }} simulated games between {{ results.summary.home_team.name }} and {{ results.summary.away_team.name }}</p>
+            
+            {% if players %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Pos</th>
+                            <th>Team</th>
+                            <th>Fantasy Pts</th>
+                            <th>Min</th>
+                            <th>Max</th>
+                            <th>Std Dev</th>
+                            <th colspan="3">Key Stats (avg per game)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for player in players %}
+                        <tr>
+                            <td>{{ player.name }}</td>
+                            <td>{{ player.position }}</td>
+                            <td>{{ player.team }}</td>
+                            <td><b>{{ player.stats.fantasy_pts_avg|round(1) }}</b></td>
+                            <td>{{ player.stats.fantasy_pts_min|round(1) }}</td>
+                            <td>{{ player.stats.fantasy_pts_max|round(1) }}</td>
+                            <td>{{ player.stats.fantasy_pts_std|round(2) }}</td>
+                            
+                            {% if player.position == 'QB' %}
+                                <td>{{ player.stats.pass_comp_avg|round(1) }}/{{ player.stats.pass_att_avg|round(1) }}</td>
+                                <td>{{ player.stats.pass_yds_avg|round(1) }} yds</td>
+                                <td>{{ player.stats.pass_tds_avg|round(1) }} TD</td>
+                            {% elif player.position == 'RB' %}
+                                <td>{{ player.stats.rush_att_avg|round(1) }} att</td>
+                                <td>{{ player.stats.rush_yds_avg|round(1) }} yds</td>
+                                <td>{{ player.stats.rush_tds_avg|round(2) }} TD</td>
+                            {% elif player.position in ['WR', 'TE'] %}
+                                <td>{{ player.stats.rec_avg|round(1) }} rec</td>
+                                <td>{{ player.stats.rec_yds_avg|round(1) }} yds</td>
+                                <td>{{ player.stats.rec_tds_avg|round(2) }} TD</td>
+                            {% else %}
+                                <td colspan="3">No stats available</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                <p>No player projections available.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="text-center mb-4">
+        <a href="{{ url_for('simulation.new_multiple_simulation') }}" class="btn btn-primary">Run Another Simulation</a>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Return to Home</a>
+    </div>
+</div>
+{% endblock %}

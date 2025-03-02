@@ -1,6 +1,7 @@
 import random
 import json
 import os
+import math
 from datetime import datetime
 import uuid
 from data.nfl_data_provider import NFLDataProvider
@@ -46,6 +47,38 @@ class SimulationEngine:
         
         # Initialize random state
         random.seed(datetime.now().timestamp())
+        
+        # Default player data by team
+        self.default_players = {
+            "NE": [
+                {"id": "NE_QB1", "name": "Mac Jones", "position": "QB", "team_id": "NE"},
+                {"id": "NE_RB1", "name": "Rhamondre Stevenson", "position": "RB", "team_id": "NE"},
+                {"id": "NE_WR1", "name": "DeVante Parker", "position": "WR", "team_id": "NE"},
+                {"id": "NE_WR2", "name": "JuJu Smith-Schuster", "position": "WR", "team_id": "NE"},
+                {"id": "NE_TE1", "name": "Hunter Henry", "position": "TE", "team_id": "NE"}
+            ],
+            "KC": [
+                {"id": "KC_QB1", "name": "Patrick Mahomes", "position": "QB", "team_id": "KC"},
+                {"id": "KC_RB1", "name": "Isiah Pacheco", "position": "RB", "team_id": "KC"},
+                {"id": "KC_WR1", "name": "Rashee Rice", "position": "WR", "team_id": "KC"},
+                {"id": "KC_WR2", "name": "Kadarius Toney", "position": "WR", "team_id": "KC"},
+                {"id": "KC_TE1", "name": "Travis Kelce", "position": "TE", "team_id": "KC"}
+            ],
+            "SF": [
+                {"id": "SF_QB1", "name": "Brock Purdy", "position": "QB", "team_id": "SF"},
+                {"id": "SF_RB1", "name": "Christian McCaffrey", "position": "RB", "team_id": "SF"},
+                {"id": "SF_WR1", "name": "Deebo Samuel", "position": "WR", "team_id": "SF"},
+                {"id": "SF_WR2", "name": "Brandon Aiyuk", "position": "WR", "team_id": "SF"},
+                {"id": "SF_TE1", "name": "George Kittle", "position": "TE", "team_id": "SF"}
+            ],
+            "BAL": [
+                {"id": "BAL_QB1", "name": "Lamar Jackson", "position": "QB", "team_id": "BAL"},
+                {"id": "BAL_RB1", "name": "J.K. Dobbins", "position": "RB", "team_id": "BAL"},
+                {"id": "BAL_WR1", "name": "Rashod Bateman", "position": "WR", "team_id": "BAL"},
+                {"id": "BAL_WR2", "name": "Zay Flowers", "position": "WR", "team_id": "BAL"},
+                {"id": "BAL_TE1", "name": "Mark Andrews", "position": "TE", "team_id": "BAL"}
+            ]
+        }
     
     def load_default_teams(self):
         """Load default teams if no teams are provided"""
@@ -90,88 +123,400 @@ class SimulationEngine:
         """
         return self.teams.get(team_id)
     
-    def simulate_game(self, home_team, away_team, verbose=False):
+    def get_players_for_team(self, team_id):
         """
-        Simulate a complete football game between two teams
+        Get the list of players for a specific team
         
         Args:
-            home_team (Team or str): Home team or team ID
-            away_team (Team or str): Away team or team ID
-            verbose (bool): Whether to include detailed play-by-play information
+            team_id (str): Team ID
             
         Returns:
-            dict: Game results
+            list: List of player dictionaries
         """
-        from models.game import Game
+        return self.default_players.get(team_id, [])
+    
+def simulate_game(self, home_team, away_team, verbose=False):
+    """
+    Simulate a complete football game between two teams
+    
+    Args:
+        home_team (Team or str): Home team or team ID
+        away_team (Team or str): Away team or team ID
+        verbose (bool): Whether to include detailed play-by-play information
         
-        # Handle string team IDs by getting the actual team objects
-        if isinstance(home_team, str):
-            home_team = self.get_team(home_team)
-        if isinstance(away_team, str):
-            away_team = self.get_team(away_team)
-            
-        # Ensure we have valid team objects
-        if not home_team or not away_team:
-            raise ValueError("Invalid team(s) provided for simulation")
+    Returns:
+        dict: Game results
+    """
+    from models.game import Game
+    
+    # Handle string team IDs by getting the actual team objects
+    if isinstance(home_team, str):
+        home_team = self.get_team(home_team)
+    if isinstance(away_team, str):
+        away_team = self.get_team(away_team)
         
-        # Create a new game object using your existing Game class
-        game = Game(home_team=home_team, away_team=away_team)
-        game.home_score = 0
-        game.away_score = 0
+    # Ensure we have valid team objects
+    if not home_team or not away_team:
+        raise ValueError("Invalid team(s) provided for simulation")
+    
+    # Get players for both teams
+    home_players = self.get_players_for_team(home_team.id)
+    away_players = self.get_players_for_team(away_team.id)
+    
+    # Initialize player stats
+    player_stats = self.initialize_player_stats(home_players + away_players)
+    
+    # Create a new game object using your existing Game class
+    game = Game(home_team=home_team, away_team=away_team)
+    game.home_score = 0
+    game.away_score = 0
+    
+    # Initialization based on your existing code structure
+    game.current_possession = random.choice([home_team.id, away_team.id])
+    game.field_position = 25  # Starting at the 25 yard line
+    game.current_down = 1
+    game.yards_to_first = 10
+    game.game_clock = self.parameters['quarters'] * self.parameters['quarter_length'] * 60  # in seconds
+    
+    # Tracking for play history
+    play_history = []
+    
+    # Play until game ends
+    max_plays = 150  # Safety limit to prevent infinite loops
+    play_count = 0
+    
+    while game.game_clock > 0 and play_count < max_plays:
+        # Get offensive and defensive teams
+        if game.current_possession == home_team.id:
+            offensive_team = home_team
+            offensive_players = home_players
+            defensive_team = away_team
+        else:
+            offensive_team = away_team
+            offensive_players = away_players
+            defensive_team = home_team
         
-        # Initialization based on your existing code structure
-        game.current_possession = random.choice([home_team.id, away_team.id])
-        game.field_position = 25  # Starting at the 25 yard line
-        game.current_down = 1
-        game.yards_to_first = 10
-        game.game_clock = self.parameters['quarters'] * self.parameters['quarter_length'] * 60  # in seconds
+        # Simulate a play
+        play_result = self.simulate_play(game, offensive_team, defensive_team)
         
-        # Tracking for play history
-        play_history = []
+        # Update player statistics based on the play
+        play_result = self.update_player_stats(play_result, offensive_players, player_stats)
         
-        # Play until game ends
-        max_plays = 150  # Safety limit to prevent infinite loops
-        play_count = 0
+        play_history.append(play_result)
+        play_count += 1
         
-        while game.game_clock > 0 and play_count < max_plays:
-            # Get offensive and defensive teams
-            if game.current_possession == home_team.id:
-                offensive_team = home_team
-                defensive_team = away_team
-            else:
-                offensive_team = away_team
-                defensive_team = home_team
-            
-            # Simulate a play
-            play_result = self.simulate_play(game, offensive_team, defensive_team)
-            play_history.append(play_result)
-            play_count += 1
-            
-            # Update game clock
-            game.game_clock -= self.parameters.get('time_between_plays', 40)
-            
-            # Handle possession changes, scoring, etc.
-            self.process_play_result(game, play_result, offensive_team, defensive_team)
+        # Update game clock
+        game.game_clock -= self.parameters.get('time_between_plays', 40)
         
-        # Prepare game results
-        results = {
-            'game_id': str(uuid.uuid4()),
-            'date': datetime.now().isoformat(),
-            'home_team': {
-                'id': home_team.id,
-                'name': home_team.name,
-                'score': game.home_score
-            },
-            'away_team': {
-                'id': away_team.id,
-                'name': away_team.name,
-                'score': game.away_score
-            },
-            'play_history': play_history if verbose else [],
-            'total_plays': play_count
+        # Handle possession changes, scoring, etc.
+        self.process_play_result(game, play_result, offensive_team, defensive_team)
+    
+    # Calculate fantasy points for players
+    fantasy_points = self.calculate_fantasy_points_from_stats(player_stats)
+    
+    # Prepare game results
+    results = {
+        'game_id': str(uuid.uuid4()),
+        'date': datetime.now().isoformat(),
+        'home_team': {
+            'id': home_team.id,
+            'name': home_team.name,
+            'score': game.home_score
+        },
+        'away_team': {
+            'id': away_team.id,
+            'name': away_team.name,
+            'score': game.away_score
+        },
+        'play_history': play_history if verbose else [],
+        'total_plays': play_count,
+        'player_stats': player_stats,
+        'fantasy_points': fantasy_points
+    }
+    
+    # Format player stats for the web interface
+    web_player_stats = []
+    for player_id, stats in player_stats.items():
+        # Create a web-friendly format
+        web_stats = {
+            'id': player_id,
+            'name': stats.get('player_name', 'Unknown'),
+            'team': stats.get('team_id', ''),
+            'position': stats.get('position', ''),
+            'stats': {}
         }
         
-        return results
+        # Add position-specific stats
+        if stats.get('position') == 'QB':
+            web_stats['stats'] = {
+                'pass_att': stats.get('pass_attempts', 0),
+                'pass_comp': stats.get('pass_completions', 0),
+                'pass_yds': stats.get('pass_yards', 0),
+                'pass_tds': stats.get('pass_tds', 0),
+                'int': stats.get('interceptions', 0),
+                'rush_att': stats.get('rush_attempts', 0),
+                'rush_yds': stats.get('rush_yards', 0),
+                'rush_tds': stats.get('rush_tds', 0),
+                'fantasy_pts': fantasy_points.get(player_id, 0)
+            }
+        elif stats.get('position') == 'RB':
+            web_stats['stats'] = {
+                'rush_att': stats.get('rush_attempts', 0),
+                'rush_yds': stats.get('rush_yards', 0),
+                'rush_tds': stats.get('rush_tds', 0),
+                'rec': stats.get('receptions', 0),
+                'rec_yds': stats.get('receiving_yards', 0),
+                'rec_tds': stats.get('receiving_tds', 0),
+                'fumbles': stats.get('fumbles', 0),
+                'fantasy_pts': fantasy_points.get(player_id, 0)
+            }
+        elif stats.get('position') in ['WR', 'TE']:
+            web_stats['stats'] = {
+                'targets': stats.get('targets', 0),
+                'rec': stats.get('receptions', 0),
+                'rec_yds': stats.get('receiving_yards', 0),
+                'rec_tds': stats.get('receiving_tds', 0),
+                'rush_att': stats.get('rush_attempts', 0),
+                'rush_yds': stats.get('rush_yards', 0),
+                'rush_tds': stats.get('rush_tds', 0),
+                'fantasy_pts': fantasy_points.get(player_id, 0)
+            }
+        
+        web_player_stats.append(web_stats)
+    
+    # Add web-formatted player stats to results
+    results['player_stats_web'] = web_player_stats
+    
+    return results
+
+    def initialize_player_stats(self, players):
+        """
+        Initialize statistics for all players
+        
+        Args:
+            players (list): List of player dictionaries
+            
+        Returns:
+            dict: Dictionary of player statistics by player ID
+        """
+        player_stats = {}
+        
+        for player in players:
+            player_id = player["id"]
+            position = player["position"]
+            
+            # Base stats for all players
+            stats = {
+                "player_id": player_id,
+                "player_name": player["name"],
+                "team_id": player["team_id"],
+                "position": position,
+            }
+            
+            # Position-specific stats
+            if position == "QB":
+                stats.update({
+                    "pass_attempts": 0,
+                    "pass_completions": 0,
+                    "pass_yards": 0,
+                    "pass_tds": 0,
+                    "interceptions": 0,
+                    "rush_attempts": 0,
+                    "rush_yards": 0,
+                    "rush_tds": 0
+                })
+            elif position == "RB":
+                stats.update({
+                    "rush_attempts": 0,
+                    "rush_yards": 0,
+                    "rush_tds": 0,
+                    "receptions": 0,
+                    "receiving_yards": 0,
+                    "receiving_tds": 0,
+                    "fumbles": 0
+                })
+            elif position in ["WR", "TE"]:
+                stats.update({
+                    "targets": 0,
+                    "receptions": 0,
+                    "receiving_yards": 0,
+                    "receiving_tds": 0,
+                    "rush_attempts": 0,
+                    "rush_yards": 0,
+                    "rush_tds": 0
+                })
+            
+            player_stats[player_id] = stats
+        
+        return player_stats
+    
+    def update_player_stats(self, play_result, offensive_players, player_stats):
+        """
+        Update player statistics based on a play result
+        
+        Args:
+            play_result (dict): Play result
+            offensive_players (list): List of offensive players
+            player_stats (dict): Current player statistics
+            
+        Returns:
+            dict: Updated play result with player IDs
+        """
+        play_type = play_result.get('play_type')
+        yards_gained = play_result.get('yards_gained', 0)
+        
+        # Only update for regular plays (not punts, field goals)
+        if play_type in ['pass', 'run']:
+            # Get players by position
+            qb = next((p for p in offensive_players if p['position'] == 'QB'), None)
+            rbs = [p for p in offensive_players if p['position'] == 'RB']
+            wrs = [p for p in offensive_players if p['position'] == 'WR']
+            tes = [p for p in offensive_players if p['position'] == 'TE']
+            
+            # Choose players for this play
+            if play_type == 'pass':
+                passer = qb
+                receivers = wrs + tes
+                
+                # Choose a random receiver with bias toward WRs
+                receiver_weights = [2 if p['position'] == 'WR' else 1 for p in receivers]
+                receiver = random.choices(receivers, weights=receiver_weights, k=1)[0] if receivers else None
+                
+                if passer and receiver and passer['id'] in player_stats and receiver['id'] in player_stats:
+                    # Determine if pass is complete (70% completion rate)
+                    is_complete = yards_gained > 0
+                    
+                    # Update passer stats
+                    passer_stats = player_stats[passer['id']]
+                    passer_stats['pass_attempts'] += 1
+                    
+                    if is_complete:
+                        passer_stats['pass_completions'] += 1
+                        passer_stats['pass_yards'] += yards_gained
+                        
+                        # Update receiver stats
+                        receiver_stats = player_stats[receiver['id']]
+                        receiver_stats['targets'] += 1
+                        receiver_stats['receptions'] += 1
+                        receiver_stats['receiving_yards'] += yards_gained
+                        
+                        # Touchdown
+                        if play_result.get('touchdown', False):
+                            passer_stats['pass_tds'] += 1
+                            receiver_stats['receiving_tds'] += 1
+                    else:
+                        # Incomplete pass or interception
+                        receiver_stats = player_stats[receiver['id']]
+                        receiver_stats['targets'] += 1
+                    
+                    # Update player IDs in play result
+                    play_result['passer_id'] = passer['id']
+                    play_result['receiver_id'] = receiver['id']
+                    
+                    # Check for interception
+                    if play_result.get('turnover_type') == 'interception':
+                        passer_stats['interceptions'] += 1
+            
+            elif play_type == 'run':
+                # Choose a random RB (80% chance) or QB (20% chance)
+                if rbs and random.random() < 0.8:
+                    runner = random.choice(rbs)
+                else:
+                    runner = qb
+                
+                if runner and runner['id'] in player_stats:
+                    # Update runner stats
+                    runner_stats = player_stats[runner['id']]
+                    runner_stats['rush_attempts'] = runner_stats.get('rush_attempts', 0) + 1
+                    runner_stats['rush_yards'] = runner_stats.get('rush_yards', 0) + yards_gained
+                    
+                    # Touchdown
+                    if play_result.get('touchdown', False):
+                        runner_stats['rush_tds'] = runner_stats.get('rush_tds', 0) + 1
+                    
+                    # Fumble
+                    if play_result.get('turnover_type') == 'fumble':
+                        runner_stats['fumbles'] = runner_stats.get('fumbles', 0) + 1
+                    
+                    # Update player ID in play result
+                    play_result['runner_id'] = runner['id']
+        
+        return play_result
+    
+    def calculate_fantasy_points_from_stats(self, player_stats):
+        """
+        Calculate fantasy points for all players based on their statistics
+        
+        Args:
+            player_stats (dict): Player statistics
+            
+        Returns:
+            dict: Fantasy points by player ID
+        """
+        fantasy_points = {}
+        
+        for player_id, stats in player_stats.items():
+            position = stats.get('position', '')
+            points = 0
+            
+            # Common scoring rules
+            # Passing: 1 pt per 25 yards, 4 pts per TD, -2 pts per INT
+            # Rushing: 1 pt per 10 yards, 6 pts per TD
+            # Receiving: 1 pt per 10 yards, 6 pts per TD, 0.5 pts per reception (PPR)
+            
+            if position == 'QB':
+                points += stats.get('pass_yards', 0) / 25.0
+                points += stats.get('pass_tds', 0) * 4
+                points -= stats.get('interceptions', 0) * 2
+                points += stats.get('rush_yards', 0) / 10.0
+                points += stats.get('rush_tds', 0) * 6
+            
+            elif position == 'RB' or position == 'WR' or position == 'TE':
+                points += stats.get('rush_yards', 0) / 10.0
+                points += stats.get('rush_tds', 0) * 6
+                points += stats.get('receiving_yards', 0) / 10.0
+                points += stats.get('receiving_tds', 0) * 6
+                points += stats.get('receptions', 0) * 0.5  # PPR format
+                points -= stats.get('fumbles', 0) * 2
+            
+            fantasy_points[player_id] = round(points, 2)
+        
+        return fantasy_points
+    
+    def calculate_fantasy_points_for_player(self, stats):
+        """
+        Calculate fantasy points for a single player based on their statistics
+        
+        Args:
+            stats (dict): Player statistics
+            
+        Returns:
+            float: Fantasy points
+        """
+        position = stats.get('position', '')
+        points = 0
+        
+        # Common scoring rules
+        # Passing: 1 pt per 25 yards, 4 pts per TD, -2 pts per INT
+        # Rushing: 1 pt per 10 yards, 6 pts per TD
+        # Receiving: 1 pt per 10 yards, 6 pts per TD, 0.5 pts per reception (PPR)
+        
+        if position == 'QB':
+            points += stats.get('pass_yards', 0) / 25.0
+            points += stats.get('pass_tds', 0) * 4
+            points -= stats.get('interceptions', 0) * 2
+            points += stats.get('rush_yards', 0) / 10.0
+            points += stats.get('rush_tds', 0) * 6
+        
+        elif position == 'RB' or position == 'WR' or position == 'TE':
+            points += stats.get('rush_yards', 0) / 10.0
+            points += stats.get('rush_tds', 0) * 6
+            points += stats.get('receiving_yards', 0) / 10.0
+            points += stats.get('receiving_tds', 0) * 6
+            points += stats.get('receptions', 0) * 0.5  # PPR format
+            points -= stats.get('fumbles', 0) * 2
+        
+        return round(points, 2)
     
     def process_play_result(self, game, play_result, offensive_team, defensive_team):
         """
@@ -316,6 +661,7 @@ class SimulationEngine:
         
         return play_result
     
+
     def simulate_multiple_games(self, home_team, away_team, num_games=1, verbose=False):
         """
         Simulate multiple games between the same teams
@@ -340,10 +686,29 @@ class SimulationEngine:
             raise ValueError("Invalid team(s) provided for simulation")
             
         all_results = []
+        all_player_stats = {}
         
         for i in range(num_games):
             game_results = self.simulate_game(home_team, away_team, verbose=verbose)
             all_results.append(game_results)
+            
+            # Aggregate player stats across games
+            for player_id, stats in game_results.get('player_stats', {}).items():
+                if player_id not in all_player_stats:
+                    # Initialize with a copy of the first game's stats
+                    all_player_stats[player_id] = stats.copy()
+                    # Add tracking for min/max/games
+                    all_player_stats[player_id]['games'] = 1
+                    all_player_stats[player_id]['stats_by_game'] = [stats]
+                else:
+                    # Update cumulative stats
+                    all_player_stats[player_id]['games'] += 1
+                    all_player_stats[player_id]['stats_by_game'].append(stats)
+                    
+                    # Update numeric stats
+                    for key, value in stats.items():
+                        if isinstance(value, (int, float)) and key not in ['player_id', 'games']:
+                            all_player_stats[player_id][key] = all_player_stats[player_id].get(key, 0) + value
         
         # Compile summary statistics
         home_wins = sum(1 for r in all_results if r['home_team']['score'] > r['away_team']['score'])
@@ -352,6 +717,9 @@ class SimulationEngine:
         
         avg_home_score = sum(r['home_team']['score'] for r in all_results) / num_games
         avg_away_score = sum(r['away_team']['score'] for r in all_results) / num_games
+        
+        # Calculate statistical analysis for player stats
+        player_projections = self.analyze_player_stats(all_player_stats, num_games)
         
         summary = {
             'num_games': num_games,
@@ -367,13 +735,98 @@ class SimulationEngine:
                 'wins': away_wins,
                 'avg_score': avg_away_score
             },
-            'ties': ties
+            'ties': ties,
+            'player_projections': player_projections
         }
         
         return {
             'summary': summary,
             'games': all_results
         }
+    
+    def analyze_player_stats(self, all_player_stats, num_games):
+        """
+        Analyze player statistics across multiple games
+        
+        Args:
+            all_player_stats (dict): Player statistics from all games
+            num_games (int): Number of games simulated
+            
+        Returns:
+            dict: Player projections with statistical analysis
+        """
+        projections = {}
+        
+        for player_id, stats in all_player_stats.items():
+            if 'stats_by_game' not in stats:
+                continue
+                
+            stats_by_game = stats['stats_by_game']
+            position = stats.get('position', '')
+            
+            # Initialize player projection with basic info
+            player_proj = {
+                'player_id': player_id,
+                'player_name': stats.get('player_name', ''),
+                'team_id': stats.get('team_id', ''),
+                'position': position,
+                'games_played': len(stats_by_game)
+            }
+            
+            # Position-specific stat analysis
+            stat_keys = []
+            
+            if position == 'QB':
+                stat_keys = ['pass_attempts', 'pass_completions', 'pass_yards', 'pass_tds', 
+                            'interceptions', 'rush_attempts', 'rush_yards', 'rush_tds']
+            elif position == 'RB':
+                stat_keys = ['rush_attempts', 'rush_yards', 'rush_tds', 
+                            'receptions', 'receiving_yards', 'receiving_tds', 'fumbles']
+            elif position in ['WR', 'TE']:
+                stat_keys = ['targets', 'receptions', 'receiving_yards', 'receiving_tds',
+                            'rush_attempts', 'rush_yards', 'rush_tds']
+            
+            # Calculate statistics for each key
+            for key in stat_keys:
+                values = [game_stats.get(key, 0) for game_stats in stats_by_game]
+                
+                if not values:
+                    continue
+                
+                # Calculate statistics
+                total = sum(values)
+                avg = total / len(values) if values else 0
+                min_val = min(values) if values else 0
+                max_val = max(values) if values else 0
+                
+                # Calculate standard deviation
+                variance = sum((x - avg) ** 2 for x in values) / len(values) if len(values) > 1 else 0
+                std_dev = math.sqrt(variance)
+                
+                # Store analysis in projection
+                player_proj[f'{key}_total'] = total
+                player_proj[f'{key}_avg'] = avg
+                player_proj[f'{key}_min'] = min_val
+                player_proj[f'{key}_max'] = max_val
+                player_proj[f'{key}_std_dev'] = std_dev
+            
+            # Calculate fantasy points
+            fantasy_points = [self.calculate_fantasy_points_for_player(game_stats) for game_stats in stats_by_game]
+            
+            if fantasy_points:
+                player_proj['fantasy_points_total'] = sum(fantasy_points)
+                player_proj['fantasy_points_avg'] = sum(fantasy_points) / len(fantasy_points)
+                player_proj['fantasy_points_min'] = min(fantasy_points)
+                player_proj['fantasy_points_max'] = max(fantasy_points)
+                
+                # Standard deviation for fantasy points
+                fp_avg = player_proj['fantasy_points_avg']
+                fp_variance = sum((x - fp_avg) ** 2 for x in fantasy_points) / len(fantasy_points) if len(fantasy_points) > 1 else 0
+                player_proj['fantasy_points_std_dev'] = math.sqrt(fp_variance)
+            
+            projections[player_id] = player_proj
+        
+        return projections
     
     def simulate_season(self, teams, schedule):
         """
@@ -548,16 +1001,60 @@ class SimulationEngine:
         Returns:
             dict: Fantasy points by player
         """
-        # Simplified fantasy points calculation for compatibility
-        # In the future, we can enhance this with real player stats
+        # Check if game results already have fantasy points calculated
+        if 'fantasy_points' in game_results and game_results['fantasy_points']:
+            return game_results['fantasy_points']
+            
+        # Check if game results have player stats
+        if 'player_stats' in game_results and game_results['player_stats']:
+            return self.calculate_fantasy_points_from_stats(game_results['player_stats'])
         
-        fantasy_points = {
-            "QB1": random.randint(10, 30),
-            "RB1": random.randint(5, 25),
-            "WR1": random.randint(5, 25),
-            "TE1": random.randint(2, 15),
-            "K1": random.randint(3, 12)
-        }
+        # Fall back to simplified calculation if no detailed stats
+        fantasy_points = {}
+        
+        # Get players from both teams
+        home_team_id = game_results.get('home_team', {}).get('id')
+        away_team_id = game_results.get('away_team', {}).get('id')
+        
+        if home_team_id:
+            home_players = self.get_players_for_team(home_team_id)
+            for player in home_players:
+                # Generate random fantasy points based on position
+                position = player['position']
+                player_id = player['id']
+                
+                if position == 'QB':
+                    points = random.uniform(10, 30)
+                elif position == 'RB':
+                    points = random.uniform(5, 25)
+                elif position == 'WR':
+                    points = random.uniform(5, 20)
+                elif position == 'TE':
+                    points = random.uniform(3, 15)
+                else:
+                    points = random.uniform(1, 10)
+                    
+                fantasy_points[player_id] = round(points, 2)
+        
+        if away_team_id:
+            away_players = self.get_players_for_team(away_team_id)
+            for player in away_players:
+                # Generate random fantasy points based on position
+                position = player['position']
+                player_id = player['id']
+                
+                if position == 'QB':
+                    points = random.uniform(10, 30)
+                elif position == 'RB':
+                    points = random.uniform(5, 25)
+                elif position == 'WR':
+                    points = random.uniform(5, 20)
+                elif position == 'TE':
+                    points = random.uniform(3, 15)
+                else:
+                    points = random.uniform(1, 10)
+                    
+                fantasy_points[player_id] = round(points, 2)
         
         return fantasy_points
     
@@ -571,18 +1068,57 @@ class SimulationEngine:
         Returns:
             dict: Fantasy projections
         """
-        # Simplified fantasy projections for compatibility
-        projections = {
-            "players": [
-                {"id": "QB1", "name": "Patrick Mahomes", "position": "QB", "points": 22.5},
-                {"id": "RB1", "name": "Christian McCaffrey", "position": "RB", "points": 20.8},
-                {"id": "WR1", "name": "Justin Jefferson", "position": "WR", "points": 18.3},
-                {"id": "TE1", "name": "Travis Kelce", "position": "TE", "points": 13.7},
-                {"id": "K1", "name": "Harrison Butker", "position": "K", "points": 8.5}
-            ]
-        }
+        # Get all teams
+        team_ids = list(self.teams.keys())
         
-        return projections
+        # Create all possible matchups
+        matchups = []
+        for i, home_id in enumerate(team_ids):
+            for away_id in team_ids[i+1:]:
+                matchups.append((home_id, away_id))
+        
+        # Select a subset of matchups to simulate
+        num_matchups = min(len(matchups), 5)  # Limit to 5 matchups for efficiency
+        selected_matchups = random.sample(matchups, num_matchups)
+        
+        # Simulate each matchup multiple times
+        all_player_stats = {}
+        
+        for home_id, away_id in selected_matchups:
+            home_team = self.get_team(home_id)
+            away_team = self.get_team(away_id)
+            
+            # Simulate fewer games per matchup to stay within limits
+            sims_per_matchup = max(1, num_simulations // num_matchups)
+            results = self.simulate_multiple_games(home_team, away_team, sims_per_matchup)
+            
+            # Extract player projections
+            if 'summary' in results and 'player_projections' in results['summary']:
+                for player_id, proj in results['summary']['player_projections'].items():
+                    all_player_stats[player_id] = proj
+        
+        # Format projections for the web app
+        players = []
+        for player_id, stats in all_player_stats.items():
+            players.append({
+                "id": player_id,
+                "name": stats.get("player_name", "Unknown"),
+                "position": stats.get("position", ""),
+                "team": stats.get("team_id", ""),
+                "points": stats.get("fantasy_points_avg", 0),
+                "min": stats.get("fantasy_points_min", 0),
+                "max": stats.get("fantasy_points_max", 0),
+                "std_dev": stats.get("fantasy_points_std_dev", 0),
+                "games": stats.get("games_played", 0)
+            })
+        
+        # Sort by points
+        players.sort(key=lambda x: x["points"], reverse=True)
+        
+        return {
+            "players": players,
+            "simulations": num_simulations
+        }
     
     def save_fantasy_projections(self, projections, filename=None):
         """
@@ -606,9 +1142,17 @@ class SimulationEngine:
         filepath = os.path.join(self.output_dir, filename)
         
         with open(filepath, 'w') as f:
-            f.write("id,name,position,points\n")
+            f.write("id,name,position,team,points,min,max,std_dev,games\n")
             
             for player in projections.get('players', []):
-                f.write(f"{player['id']},{player['name']},{player['position']},{player['points']}\n")
+                f.write(f"{player['id']},{player['name']},{player['position']},{player['team']},"
+                        f"{player['points']:.2f},{player['min']:.2f},{player['max']:.2f},"
+                        f"{player.get('std_dev', 0):.2f},{player.get('games', 0)}\n")
         
         return filepath
+    
+def run_multiple_simulations(self, home_team, away_team, num_sims=1, verbose=False):
+    """
+    Alias for simulate_multiple_games to maintain compatibility with web app
+    """
+    return self.simulate_multiple_games(home_team, away_team, num_games=num_sims, verbose=verbose)    
