@@ -1,12 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from simulation.engine import SimulationEngine
-from web_app.app import app  # Import your Flask app
-
-# Initialize the simulation engine
-sim_engine = SimulationEngine(output_dir="results")
 
 # Define the blueprint for simulation routes
 simulation_bp = Blueprint('simulation', __name__)
+
+# Initialize the simulation engine
+sim_engine = SimulationEngine(output_dir="results")
 
 @simulation_bp.route('/new', methods=['GET'])
 def new_simulation():

@@ -14,6 +14,8 @@ from simulation.engine import SimulationEngine
 from data_processing.data_import import DataImporter
 from data_processing.data_analysis import PlayByPlayAnalyzer
 from data_processing.data_export import DataExporter
+# Import routes
+from web_app.routes import simulation
 
 app = Flask(__name__)
 app.secret_key = 'football_simulation_secret_key'  # For flash messages
@@ -23,6 +25,10 @@ sim_engine = SimulationEngine(output_dir="results")
 data_importer = DataImporter(data_dir="data")
 data_analyzer = PlayByPlayAnalyzer()
 data_exporter = DataExporter(output_dir="results")
+
+# Register routes
+simulation.init_app(app)
+
 
 @app.route('/')
 def index():
